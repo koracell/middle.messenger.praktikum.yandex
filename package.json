@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "parcel index.hbs",
+    "dev": "parcel index.html",
     "build": "parcel build index.hbs"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "parcel": "^2.4.1",
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
-    "express": "^4.17.3",
-    "parcel": "^2.4.1"
+    "express": "^4.17.3"
   }
 }

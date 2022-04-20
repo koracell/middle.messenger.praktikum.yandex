@@ -1,0 +1,19 @@
+.authorization {
+    width: 340px;
+    height: 450px;
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #FFFFFF;
+    border: solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+
+    text-align: center;
+}
+
+.authorization__title {
+    margin: 50px 0px;
+}
+

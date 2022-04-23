@@ -1,4 +1,4 @@
-.authorization {
+.registration {
     width: 340px;
     height: 450px;
     
@@ -13,7 +13,12 @@
     text-align: center;
 }
 
-.authorization__title {
+.registration__title {
     margin: 50px 0px;
 }
 
+.registration__form {
+    input, button {
+        margin: 10px auto;
+    }
+}

@@ -1,4 +1,3 @@
-import Handlebars from 'handlebars'
 import {field} from '../../components/field/field.tmpl'
 import {button} from '../../components/button/button.tmpl'
 import tmpl from './authorization.hbs'
@@ -23,7 +22,6 @@ const fields = {
 }
 
 export const buildHtmlAuthorization = () => {
-    console.log(field(fields.login))
 
     return tmpl({
         loginField: field(fields.login),

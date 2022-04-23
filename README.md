@@ -11,6 +11,9 @@
 Ссылка на PullRequest sprint_1: https://github.com/koracell/middle.messenger.praktikum.yandex/pull/1
 Ссылка на макеты: https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1
 
+Запуска проекта на local:
+$ npm run dev
+
 Даже законченный проект остаётся только заготовкой, пока им не начнут пользоваться. Но сначала пользователь должен понять, зачем ему пользоваться вашим кодом. В этом помогает файл README. 
 
 README — первое, что прочитает пользователь, когда попадёт в репозиторий на «Гитхабе». Хороший REAMDE отвечает на четыре вопроса:

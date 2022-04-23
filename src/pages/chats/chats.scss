@@ -1,0 +1,143 @@
+.page-chat {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 5px;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.sidebar {
+    width: 310px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 10px;
+}
+
+.chat-view {
+    width: 970px;
+    padding-top: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-link {
+    text-align: right;
+    margin-bottom: 10px;
+    padding: 0 5px;
+}
+
+.chats-search {
+    margin-bottom: 10px;
+}
+
+.chats-search__input {
+    margin: auto;
+    width: 290px;
+    height: 32px;
+}
+
+.chats-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0 5px;
+}
+
+.chat-list__item {
+    flex-basis: 75px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.avatar-small {
+    flex-basis: 56px;
+
+    img {
+        display: block;
+        margin: 0 auto; 
+    }
+}
+
+
+.chat-item__content {
+    flex-basis: 240px;
+    padding: 5px;
+    
+    div:first-child {
+        margin-bottom: 5px;
+    }
+}
+
+.chat-item__name {
+    max-width: max-content;
+}
+
+.chat-view__header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 10px;
+}
+
+.chat-view__inner {
+    display: flex;
+    align-items: center;
+}
+
+.chat-view__avatar {
+    width: 50px;
+
+    img {
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+.chat-view__content {
+    padding-left: 10px;
+    padding-top: 30px;
+    margin-top: 10px;
+    border-top: 1px solid rgb(196, 194, 255);
+    overflow: auto;
+}
+
+.chat-content__item {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.chat-content__item-own {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.chat-content-inner {
+    max-width: 460px;
+    background-color: rgb(237, 238, 253);
+    margin-bottom: 30px;
+    padding: 10px;
+}
+
+.chat-content-inner.own {
+    background-color: rgb(147, 153, 245);
+}
+
+.chat-view__form-message {
+    min-height: 45px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.chat-view__form-message-input {
+    flex: 1 1 auto;
+    margin-left: 5px;
+}
+
+.chat-view__form-message-icon {
+    margin: auto 0;
+}

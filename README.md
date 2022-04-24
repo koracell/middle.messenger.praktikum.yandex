@@ -11,12 +11,13 @@
 ## Описание
 
 Ссылка на [PullRequest sprint_1](https://github.com/koracell/middle.messenger.praktikum.yandex/pull/1)
+
 [Ссылка на макеты](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1)
 
 ## Запуска проекта на local
 ``` $ npm run dev ```
 
-Links of Pages
+## Links of Pages
 
 - http://localhost:3000/authorization
 - http://localhost:3000/registration

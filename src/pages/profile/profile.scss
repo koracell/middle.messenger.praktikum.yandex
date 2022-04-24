@@ -1,0 +1,24 @@
+.page-profile {
+    width: 510px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.profile-form__form {
+    margin-top: 20px;
+}
+
+.profile-form__input {
+    margin: 10px 0;
+}
+
+.profile-form__button {
+    margin: 10px auto;
+}

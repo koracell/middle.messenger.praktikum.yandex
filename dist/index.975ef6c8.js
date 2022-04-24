@@ -142,7 +142,7 @@
       this[globalName] = mainExports;
     }
   }
-})({"7nZVA":[function(require,module,exports) {
+})({"7fmqN":[function(require,module,exports) {
 "use strict";
 var HMR_HOST = null;
 var HMR_PORT = null;
@@ -223,7 +223,7 @@ function _arrayLikeToArray(arr, len) {
     for(var i = 0, arr2 = new Array(len); i < len; i++)arr2[i] = arr[i];
     return arr2;
 }
-/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE */ /*::
+/* global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE, chrome, browser */ /*::
 import type {
   HMRAsset,
   HMRMessage,
@@ -250,11 +250,18 @@ interface ParcelModule {
     _disposeCallbacks: Array<(mixed) => void>,
   |};
 }
+interface ExtensionContext {
+  runtime: {|
+    reload(): void,
+  |};
+}
 declare var module: {bundle: ParcelRequire, ...};
 declare var HMR_HOST: string;
 declare var HMR_PORT: string;
 declare var HMR_ENV_HASH: string;
 declare var HMR_SECURE: boolean;
+declare var chrome: ExtensionContext;
+declare var browser: ExtensionContext;
 */ var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
 function Module(moduleName) {
@@ -309,7 +316,12 @@ if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
                     var id = assetsToAccept[i][1];
                     if (!acceptedAssets[id]) hmrAcceptRun(assetsToAccept[i][0], id);
                 }
-            } else window.location.reload();
+            } else if ('reload' in location) location.reload();
+            else {
+                // Web extension context
+                var ext = typeof chrome === 'undefined' ? typeof browser === 'undefined' ? null : browser : chrome;
+                if (ext && ext.runtime && ext.runtime.reload) ext.runtime.reload();
+            }
         }
         if (data.type === 'error') {
             // Log parcel errors to console
@@ -403,7 +415,7 @@ function reloadCSS() {
             var href = links[i].getAttribute('href');
             var hostname = getHostname();
             var servedFromHMRServer = hostname === 'localhost' ? new RegExp('^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):' + getPort()).test(href) : href.indexOf(hostname + ':' + getPort());
-            var absolute = /^https?:\/\//i.test(href) && href.indexOf(window.location.origin) !== 0 && !servedFromHMRServer;
+            var absolute = /^https?:\/\//i.test(href) && href.indexOf(location.origin) !== 0 && !servedFromHMRServer;
             if (!absolute) updateLink(links[i]);
         }
         cssTimeout = null;
@@ -538,7 +550,7 @@ else if (current_path == '/404') root.innerHTML = _errorHbsDefault.default({
 });
 else window.location = '/authorization';
 
-},{"./pages/authorization/authorization.tmpl":"gV66v","./pages/registration/registration.tmpl":"gVx4s","./pages/chats/chats.tmpl":"32AZS","./pages/profile/profile.tmpl":"5NXVP","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./pages/error/error.hbs":"ef2Gg","./pages/error/error.scss":"OszSi"}],"gV66v":[function(require,module,exports) {
+},{"./pages/authorization/authorization.tmpl":"gV66v","./pages/registration/registration.tmpl":"gVx4s","./pages/chats/chats.tmpl":"32AZS","./pages/profile/profile.tmpl":"5NXVP","./pages/error/error.scss":"OszSi","./pages/error/error.hbs":"ef2Gg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gV66v":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "buildHtmlAuthorization", ()=>buildHtmlAuthorization
@@ -2302,7 +2314,7 @@ const buildHtmlChats = ()=>{
     });
 };
 
-},{"../../components/field/field.tmpl":"4vD4i","../../components/chat_item/chat_item.tmpl":"2J1iB","./chats.hbs":"l8buw","./chats.scss":"iwlg6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","../../components/button/button.tmpl":"lPo9h"}],"2J1iB":[function(require,module,exports) {
+},{"../../components/field/field.tmpl":"4vD4i","../../components/chat_item/chat_item.tmpl":"2J1iB","../../components/button/button.tmpl":"lPo9h","./chats.hbs":"l8buw","./chats.scss":"iwlg6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2J1iB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "chat_item", ()=>chat_item
@@ -2563,7 +2575,7 @@ const buildHtmlProfile = ()=>{
     });
 };
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./profile.hbs":"hpzTq","../../components/field/field.tmpl":"4vD4i","./profile.scss":"bZDEH","../../components/button/button.tmpl":"lPo9h"}],"hpzTq":[function(require,module,exports) {
+},{"../../components/field/field.tmpl":"4vD4i","../../components/button/button.tmpl":"lPo9h","./profile.hbs":"hpzTq","./profile.scss":"bZDEH","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"hpzTq":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _handlebarsRuntime = require("handlebars/dist/handlebars.runtime");
@@ -2592,7 +2604,7 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
                     "column": 47
                 }
             }
-        }) : helper)) + "\" alt=\"avatar\" height=\"100px\" width=\"100px\">\n    <form action=\"\" class=\"profile-form__form\">\n        " + ((stack1 = (helper = (helper = lookupProperty(helpers, "firstNameField") || (depth0 != null ? lookupProperty(depth0, "firstNameField") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        }) : helper)) + "\" alt=\"avatar\" width=\"100px\" height=\"100px\">\n    <form action=\"\" class=\"profile-form__form\">\n        " + ((stack1 = (helper = (helper = lookupProperty(helpers, "firstNameField") || (depth0 != null ? lookupProperty(depth0, "firstNameField") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "firstNameField",
             "hash": {},
             "data": data,
@@ -2696,7 +2708,7 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
 });
 exports.default = templateFunction;
 
-},{"handlebars/dist/handlebars.runtime":"b7ZpO","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bZDEH":[function() {},{}],"ef2Gg":[function(require,module,exports) {
+},{"handlebars/dist/handlebars.runtime":"b7ZpO","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bZDEH":[function() {},{}],"OszSi":[function() {},{}],"ef2Gg":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _handlebarsRuntime = require("handlebars/dist/handlebars.runtime");
@@ -2745,6 +2757,6 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
 });
 exports.default = templateFunction;
 
-},{"handlebars/dist/handlebars.runtime":"b7ZpO","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"OszSi":[function() {},{}]},["7nZVA","8lqZg"], "8lqZg", "parcelRequire96ca")
+},{"handlebars/dist/handlebars.runtime":"b7ZpO","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["7fmqN","8lqZg"], "8lqZg", "parcelRequire96ca")
 
 //# sourceMappingURL=index.975ef6c8.js.map

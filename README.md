@@ -4,6 +4,8 @@
 
 [Ссылка на макеты](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1)
 
+[Ссылка проекта на netifly](https://remarkable-melba-18550e.netlify.app/)
+
 ## Запуска проекта на local
 ``` $ npm run dev ```
 

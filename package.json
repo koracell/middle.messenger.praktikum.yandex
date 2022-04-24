@@ -1,8 +1,7 @@
 {
   "name": "ya",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "dev": "parcel index.html -p 3000",
     "build": "parcel build index.html"
@@ -23,5 +22,8 @@
     "querystring-es3": "^0.2.1",
     "url": "^0.11.0",
     "util": "^0.12.4"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.7"
   }
 }

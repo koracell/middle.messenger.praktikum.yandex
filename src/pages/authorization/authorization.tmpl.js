@@ -8,16 +8,16 @@ const fields = {
     login: {
         name: 'login',
         placeholder: 'login',
-        klass: 'authorization__login-input'
+        className: 'authorization__login-input'
     },
     password: {
         name: 'password',
         placeholder: 'password',
-        klass: 'authorization__password-input'
+        className: 'authorization__password-input'
     },
     button: {
         name: 'Sign in',
-        klass: 'authorization__button-button'
+        className: 'authorization__button-button'
     }
 }
 

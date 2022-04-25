@@ -536,19 +536,35 @@ var _errorHbs = require("./pages/error/error.hbs");
 var _errorHbsDefault = parcelHelpers.interopDefault(_errorHbs);
 const root = document.getElementById('root');
 const current_path = window.location.pathname;
-if (current_path == '/registration') root.innerHTML = _registrationTmpl.buildHtmlRegistration();
-else if (current_path == '/authorization') root.innerHTML = _authorizationTmpl.buildHtmlAuthorization();
-else if (current_path == '/chats') root.innerHTML = _chatsTmpl.buildHtmlChats();
-else if (current_path == '/profile') root.innerHTML = _profileTmpl.buildHtmlProfile();
-else if (current_path == '/500') root.innerHTML = _errorHbsDefault.default({
-    errorStatus: '500',
-    errorMessage: 'Мы уже фиксим'
-});
-else if (current_path == '/404') root.innerHTML = _errorHbsDefault.default({
-    errorStatus: '400',
-    errorMessage: 'Не туда попали'
-});
-else window.location = '/authorization';
+switch(current_path){
+    case '/registration':
+        root.innerHTML = _registrationTmpl.buildHtmlRegistration();
+        break;
+    case '/authorization':
+        root.innerHTML = _authorizationTmpl.buildHtmlAuthorization();
+        break;
+    case '/chats':
+        root.innerHTML = _chatsTmpl.buildHtmlChats();
+        break;
+    case '/profile':
+        root.innerHTML = _profileTmpl.buildHtmlProfile();
+        break;
+    case '/500':
+        root.innerHTML = _errorHbsDefault.default({
+            errorStatus: '500',
+            errorMessage: 'Мы уже фиксим'
+        });
+        break;
+    case '/404':
+        root.innerHTML = _errorHbsDefault.default({
+            errorStatus: '400',
+            errorMessage: 'Не туда попали'
+        });
+        break;
+    default:
+        window.location = '/authorization';
+        break;
+}
 
 },{"./pages/authorization/authorization.tmpl":"gV66v","./pages/registration/registration.tmpl":"gVx4s","./pages/chats/chats.tmpl":"32AZS","./pages/profile/profile.tmpl":"5NXVP","./pages/error/error.scss":"OszSi","./pages/error/error.hbs":"ef2Gg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gV66v":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -564,16 +580,16 @@ const fields = {
     login: {
         name: 'login',
         placeholder: 'login',
-        klass: 'authorization__login-input'
+        className: 'authorization__login-input'
     },
     password: {
         name: 'password',
         placeholder: 'password',
-        klass: 'authorization__password-input'
+        className: 'authorization__password-input'
     },
     button: {
         name: 'Sign in',
-        klass: 'authorization__button-button'
+        className: 'authorization__button-button'
     }
 };
 const buildHtmlAuthorization = ()=>{
@@ -592,10 +608,10 @@ parcelHelpers.export(exports, "field", ()=>field
 var _fieldHbs = require("./field.hbs");
 var _fieldHbsDefault = parcelHelpers.interopDefault(_fieldHbs);
 var _fieldScss = require("./field.scss");
-const field = ({ name , placeholder , klass  })=>_fieldHbsDefault.default({
+const field = ({ name , placeholder , className  })=>_fieldHbsDefault.default({
         name,
         placeholder,
-        klass
+        className
     })
 ;
 
@@ -614,8 +630,8 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             if (Object.prototype.hasOwnProperty.call(parent, propertyName)) return parent[propertyName];
             return undefined;
         };
-        return "<input type=\"text\" class=\"input " + alias4((helper = (helper = lookupProperty(helpers, "klass") || (depth0 != null ? lookupProperty(depth0, "klass") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-            "name": "klass",
+        return "<input type=\"text\" class=\"input " + alias4((helper = (helper = lookupProperty(helpers, "className") || (depth0 != null ? lookupProperty(depth0, "className") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+            "name": "className",
             "hash": {},
             "data": data,
             "loc": {
@@ -625,7 +641,7 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
                 },
                 "end": {
                     "line": 1,
-                    "column": 41
+                    "column": 45
                 }
             }
         }) : helper)) + "\" name=\"" + alias4((helper = (helper = lookupProperty(helpers, "name") || (depth0 != null ? lookupProperty(depth0, "name") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
@@ -635,11 +651,11 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             "loc": {
                 "start": {
                     "line": 1,
-                    "column": 49
+                    "column": 53
                 },
                 "end": {
                     "line": 1,
-                    "column": 57
+                    "column": 61
                 }
             }
         }) : helper)) + "\" placeholder=\"" + alias4((helper = (helper = lookupProperty(helpers, "placeholder") || (depth0 != null ? lookupProperty(depth0, "placeholder") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
@@ -649,11 +665,11 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             "loc": {
                 "start": {
                     "line": 1,
-                    "column": 72
+                    "column": 76
                 },
                 "end": {
                     "line": 1,
-                    "column": 87
+                    "column": 91
                 }
             }
         }) : helper)) + "\">";
@@ -1913,9 +1929,9 @@ parcelHelpers.export(exports, "button", ()=>button
 var _buttonHbs = require("./button.hbs");
 var _buttonHbsDefault = parcelHelpers.interopDefault(_buttonHbs);
 var _buttonScss = require("./button.scss");
-const button = ({ name , klass  })=>_buttonHbsDefault.default({
+const button = ({ name , className  })=>_buttonHbsDefault.default({
         name,
-        klass
+        className
     })
 ;
 
@@ -1934,8 +1950,8 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             if (Object.prototype.hasOwnProperty.call(parent, propertyName)) return parent[propertyName];
             return undefined;
         };
-        return "<button class=\"button " + alias4((helper = (helper = lookupProperty(helpers, "klass") || (depth0 != null ? lookupProperty(depth0, "klass") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
-            "name": "klass",
+        return "<button class=\"button " + alias4((helper = (helper = lookupProperty(helpers, "className") || (depth0 != null ? lookupProperty(depth0, "className") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+            "name": "className",
             "hash": {},
             "data": data,
             "loc": {
@@ -1945,7 +1961,7 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
                 },
                 "end": {
                     "line": 1,
-                    "column": 31
+                    "column": 35
                 }
             }
         }) : helper)) + "\">" + alias4((helper = (helper = lookupProperty(helpers, "name") || (depth0 != null ? lookupProperty(depth0, "name") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
@@ -1955,11 +1971,11 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             "loc": {
                 "start": {
                     "line": 1,
-                    "column": 33
+                    "column": 37
                 },
                 "end": {
                     "line": 1,
-                    "column": 41
+                    "column": 45
                 }
             }
         }) : helper)) + "</button>";
@@ -2045,36 +2061,36 @@ const fields = {
     firstName: {
         name: 'first_name',
         placeholder: 'first name',
-        klass: 'registration__firstName-input'
+        class: 'registration__firstName-input'
     },
     secondName: {
         name: 'second_name',
         placeholder: 'second name',
-        klass: 'registration__secondName-input'
+        class: 'registration__secondName-input'
     },
     login: {
         name: 'login',
         placeholder: 'login',
-        klass: 'registration__login-input'
+        class: 'registration__login-input'
     },
     email: {
         name: 'email',
         placeholder: 'email',
-        klass: 'registration__email-input'
+        class: 'registration__email-input'
     },
     phone: {
         name: 'phone',
         placeholder: 'phone',
-        klass: 'registration__phone-input'
+        class: 'registration__phone-input'
     },
     password: {
         name: 'password',
         placeholder: 'password',
-        klass: 'registration__password-input'
+        class: 'registration__password-input'
     },
     button: {
         name: 'Create account',
-        klass: 'registration__button-button'
+        class: 'registration__button-button'
     }
 };
 const buildHtmlRegistration = ()=>{
@@ -2219,23 +2235,37 @@ var _buttonTmpl = require("../../components/button/button.tmpl");
 var _chatsHbs = require("./chats.hbs");
 var _chatsHbsDefault = parcelHelpers.interopDefault(_chatsHbs);
 var _chatsScss = require("./chats.scss");
+const buildHtmlChats = ()=>{
+    let chatList = [];
+    chats.list.forEach(function(item, _i, _arr) {
+        chatList.push(_chatItemTmpl.chat_item(item));
+    });
+    return _chatsHbsDefault.default({
+        searchField: _fieldTmpl.field(fields.search),
+        chatsList: chatList.join(''),
+        chat: chat_active,
+        messageField: _fieldTmpl.field(fields.message_input),
+        messageButton: _buttonTmpl.button(fields.message_button)
+    });
+};
+// TODO: вынести в отдельный файл
 const fields = {
     search: {
         name: 'search',
         placeholder: 'search',
-        klass: 'chats-search__input'
+        className: 'chats-search__input'
     },
     message_input: {
         name: 'message',
         placeholder: 'message',
-        klass: 'chat-view__form-message-input'
+        className: 'chat-view__form-message-input'
     },
     message_button: {
         name: 'send',
-        klass: 'chat-view__form-message-button'
+        className: 'chat-view__form-message-button'
     }
 };
-//  в дальнейшем будем получать список по api сервера из базы данных. 
+//  TODO в дальнейшем будем получать список по api сервера из базы данных. 
 const chats = {
     list: [
         {
@@ -2300,19 +2330,6 @@ const chat_active = {
     ],
     image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'
 };
-const buildHtmlChats = ()=>{
-    let chats_list_html = '';
-    chats.list.forEach(function(item, i, arr) {
-        chats_list_html += _chatItemTmpl.chat_item(item);
-    });
-    return _chatsHbsDefault.default({
-        searchField: _fieldTmpl.field(fields.search),
-        chatsList: chats_list_html,
-        chat: chat_active,
-        messageField: _fieldTmpl.field(fields.message_input),
-        messageButton: _buttonTmpl.button(fields.message_button)
-    });
-};
 
 },{"../../components/field/field.tmpl":"4vD4i","../../components/chat_item/chat_item.tmpl":"2J1iB","../../components/button/button.tmpl":"lPo9h","./chats.hbs":"l8buw","./chats.scss":"iwlg6","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2J1iB":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -2322,11 +2339,11 @@ parcelHelpers.export(exports, "chat_item", ()=>chat_item
 var _chatItemHbs = require("./chat_item.hbs");
 var _chatItemHbsDefault = parcelHelpers.interopDefault(_chatItemHbs);
 var _chatItemScss = require("./chat_item.scss");
-const chat_item = ({ name , last_message , date_last_message , image_link  })=>_chatItemHbsDefault.default({
+const chat_item = ({ name , lastMessage , dateLastMessage , imageLink  })=>_chatItemHbsDefault.default({
         name,
-        last_message,
-        date_last_message,
-        image_link
+        lastMessage,
+        dateLastMessage,
+        imageLink
     })
 ;
 
@@ -2345,7 +2362,7 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             if (Object.prototype.hasOwnProperty.call(parent, propertyName)) return parent[propertyName];
             return undefined;
         };
-        return "<div class=\"chat-list__item\">\n    <div class='avatar-small'><img src=\"" + alias4((helper = (helper = lookupProperty(helpers, "image_link") || (depth0 != null ? lookupProperty(depth0, "image_link") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        return "<div class=\"chat-item\">\n    <div class='avatar-small'><img src=\"" + alias4((helper = (helper = lookupProperty(helpers, "image_link") || (depth0 != null ? lookupProperty(depth0, "image_link") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "image_link",
             "hash": {},
             "data": data,
@@ -2373,7 +2390,7 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
                     "column": 45
                 }
             }
-        }) : helper)) + "</div>\n        <div class='chat-item__last-meesage'>" + alias4((helper = (helper = lookupProperty(helpers, "last_message") || (depth0 != null ? lookupProperty(depth0, "last_message") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        }) : helper)) + "</div>\n        <div class='chat-item__last-message'>" + alias4((helper = (helper = lookupProperty(helpers, "last_message") || (depth0 != null ? lookupProperty(depth0, "last_message") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "last_message",
             "hash": {},
             "data": data,
@@ -2450,7 +2467,7 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
                     "column": 27
                 }
             }
-        }) : helper)) != null ? stack1 : "") + "\n        </div>\n    </div>\n    <div class=\"chat-view\">\n        <div class=\"chat-view__header\">\n            <div class=\"chat-view__inner\">\n                <div class=\"chat-view__avatar\">\n                    <img src=\"" + alias5(alias4((stack1 = depth0 != null ? lookupProperty(depth0, "chat") : depth0) != null ? lookupProperty(stack1, "image_link") : stack1, depth0)) + "\" alt=\"avatar\" width=\"40\" height=\"40\">\n                </div>\n                <div class=\"chat-view__name\">\n                    " + alias5(alias4((stack1 = depth0 != null ? lookupProperty(depth0, "chat") : depth0) != null ? lookupProperty(stack1, "name") : stack1, depth0)) + "\n                </div>\n            </div>\n            <div class=\"chat-view__menu\">\n                <a href=\"/profile\"><img src=\"https://img2.freepng.ru/20180425/qzq/kisspng-computer-icons-menu-bar-icon-design-hamburger-butt-5ae053e44abbe3.3712052415246509803061.jpg\" alt=\"avatar\" width=\"40\" height=\"40\"></a>\n            </div>\n        </div>\n        <div class=\"chat-view__content\">\n" + ((stack1 = lookupProperty(helpers, "each").call(alias1, (stack1 = depth0 != null ? lookupProperty(depth0, "chat") : depth0) != null ? lookupProperty(stack1, "messages") : stack1, {
+        }) : helper)) != null ? stack1 : "") + "\n        </div>\n    </div>\n    <div class=\"chat-view\">\n        <div class=\"chat-view__header\">\n            <div class=\"chat-view__inner\">\n                <div class=\"chat-view__avatar\">\n                    <img src=\"" + alias5(alias4((stack1 = depth0 != null ? lookupProperty(depth0, "chat") : depth0) != null ? lookupProperty(stack1, "image_link") : stack1, depth0)) + "\" alt=\"avatar\" width=\"40\" height=\"40\">\n                </div>\n                <div class=\"chat-view__name\">\n                    " + alias5(alias4((stack1 = depth0 != null ? lookupProperty(depth0, "chat") : depth0) != null ? lookupProperty(stack1, "name") : stack1, depth0)) + "\n                </div>\n            </div>\n            <div class=\"chat-view__menu\">\n                <a href=\"/profile\">\n                    <img src=\"https://img2.freepng.ru/20180425/qzq/kisspng-computer-icons-menu-bar-icon-design-hamburger-butt-5ae053e44abbe3.3712052415246509803061.jpg\" alt=\"avatar\" width=\"40\" height=\"40\">\n                </a>\n            </div>\n        </div>\n        <div class=\"chat-view__content\">\n" + ((stack1 = lookupProperty(helpers, "each").call(alias1, (stack1 = depth0 != null ? lookupProperty(depth0, "chat") : depth0) != null ? lookupProperty(stack1, "messages") : stack1, {
             "name": "each",
             "hash": {},
             "fn": container.program(1, data, 0),
@@ -2458,11 +2475,11 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             "data": data,
             "loc": {
                 "start": {
-                    "line": 28,
+                    "line": 30,
                     "column": 12
                 },
                 "end": {
-                    "line": 32,
+                    "line": 34,
                     "column": 21
                 }
             }
@@ -2474,25 +2491,25 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             "data": data,
             "loc": {
                 "start": {
-                    "line": 33,
+                    "line": 35,
                     "column": 12
                 },
                 "end": {
-                    "line": 37,
+                    "line": 39,
                     "column": 21
                 }
             }
-        })) != null ? stack1 : "") + "        </div>\n        <div class=\"chat-view__footer\">\n            <div class=\"chat-view__form-message\">\n                <img class='chat-view__form-message-icon' src=\"data:image/png;base64,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\" height=\"32px\" width=\"32px\" alt=\"\">\n                " + ((stack1 = (helper = (helper = lookupProperty(helpers, "messageField") || (depth0 != null ? lookupProperty(depth0, "messageField") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
+        })) != null ? stack1 : "") + "        </div>\n        <div class=\"chat-view__footer\">\n            <div class=\"chat-view__form-message\">\n                <img class='chat-view__form-message-icon' src=\"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAgVBMVEX///8AAAD7+/vCwsLs7Ozk5OTx8fGjo6OmpqbAwMBJSUkzMzP5+flYWFhxcXFWVlZeXl46OjomJiYuLi4YGBgfHx9nZ2dEREQ+Pj4wMDAVFRXU1NR5eXmdnZ1MTEwiIiLe3t7Q0NANDQ2ysrKHh4eKioqSkpJjY2N/f392dna3t7eNN7x1AAAKkElEQVR4nO1daVvqSgyeQouKdV/wiGIB4aj//wdeAb0kaTtrJjPwnPerwzQxe2ZTKmvU0+X6cXK7WBSL57vZ5+tXNUhNEiPq+fu4aOP6tUlNGQ/mn7cd7O1ws65SkxeM5XkvezvMhqlJDMHgxMDeFueHy+OyXz2JHKepSfVCeWXJ3wYfB+hZTx34+8b9PDXBjqj/ujH4jdfUNDuhunNmsCgeD0hT5x78feOpTk24LYad9N9dr7/m06pqpsPlx/i+a8hzmZp0O3QxeHHa4EGj+eqmPez2IFg8axO+6szNBvPH1sibkTS57mhL8LXfvMpLOngiSKofWhJ80buPZkbGPwoR6gsqwVtzIKepwakAmf6gDF7Y+P+G+NUmMpEhoCr6bvezGmvqeVwiQ0AleGL9S5zjrSPSGAR/BpW6QL/MNCqGMKjUBP70byQSw0Bt0NEljt7gj3MspagEnX3+FP76OgaJYQhT0S3W8PcNN4GhoCrqwaBSsCv3wk1hIBgkqEhVmVepGGyDP7gGcyxZKQwEjwQVFuKMk8JABIYJCJi95aOmbBL8xheY54yNwkBwMqgUmCgXb8rLoAIl/w0PgaFgtMEtlvupFlmk38wSVKoEk+WwWsPOoBqA1aovBgoDwc+gUqC/mL4OjsGg+tjP98kxXwi4UjWM1/2EqduKUSSInGniGpGlXNLPe8E0pR8iSRBNfMU1ZyAdvAzmIsN4DEI7TNhw407VIECzJp0vjRMmfgDiYbLiIqKKKtTISJXTxFTR77wULEMlKoHjSlBVYOqGd2pLxJUgWi19TrKiH1mCaAnqiXtuG8SWoBqAyVfck1sgugTRkn6CTafxGVRwDxH/7CYIMAg/IZ+zxSqXIOCGfvFoGDVV+wHseC+kd2IKqKhSz+ADlvtU2BA9TGyAtrgJH8OQUFGko8VljC/0Q0SCDfpEE+MTvRCxwRE6miFbGopIsMY730VXR0UkWD+hb4iu4cswiLZ8ybYRZRgkW9olFw5FGByQ83uS+ZpIHCQ2KNqAogxGOZg0IAxKdkllwsQf/BFJL5PEyYwFS4oUcbC4OToGiQQnR8cgOaR4fCpKJSiYjf6zQQ7UJJM5PhskDI6PTUVHREWfjk6CN+kYlGj8/gsTMZFdmCiHZ6zbTGVU1D5M1Nsm8RvfMa/cbLD87TByVf0iFf3IPtku98Lm6dwkcTIaGxyB2pilu5Ci8atT0RFcieJobXgwOBqeDt3UZ0RaFjobRP8LhgVhDwZfF5uBLjsmqA1qMpkSO9wPh690w8MGf1f77Pcq0zChYXBErtAKjhceEnx0GbwFpVpng+SSheClKI8wAdZrH+w+MrIvl0pirsGbhQNUdAurrJLaoC5MkP9FMINBKrqBjT+lXlQT6EcPeGjwoQQPFSU3A1l8pLa3wZIMTcEguRbIYl+IX6q2RXIbLIp7sxnSMKGzQZL0pLfB4sG88aUVJjRDF3hoBipqwyBN1ezDRAYMWmxdcggTGdrgswWD/qlaBmHCxwY1DL7hoRmoqIcENV21DFWU1wbZU7VwFb23YJAEt8NK1XxsUKOi5H+RgQ16qKh9RX8oNugQJo4jVbOv6DNQURsnc/Spmn01Ed0G4wR6hzBxmKkaCW46G8yAQSLBhbsNHlZFz2uD9H9xIKkaKREOK0z8S9XahnVYqZqHkzm+VM0hTGRQLrmnatSwUlb0qVO1HCp6j2SbeFFdqpZB0ymqDWa4+GLhRWkNdHypGmFQMlVLEyY0Q5/x0AxU1IJBaljW+2QYGJwHM5h5qjbF80WqB4lYHFK1YAmWeL44Nlg6pGrccXBAzCNKT6aVqgmqKJVHlDBBGZRM1eBVoJYSdK/oqYpKLr5QLxPHBkkfQjJVUwrPGKXgTWqD8ALCwuqAdLgNSlb0VEct9i15qCjJvyS7at94cpzQo6J3SNW4F18Uuuj0Wx7mjVkMYUIzlN8GVY0UqDGO9wj0DhU9vxclz+6Y3WhcG+RO1TaA1w9a3FIQVYIxVJRkM41pdNwwEYVBBX2z8UCER6pGM5n+oTHChCL3gpmOZ75gEphTNe568AfwxW9TOrrGJHioqLgN4rt4TdcPkjaOTS5KnIxsqrYDFIshUpAmgI2Kkn3KM9lUbQegGgvDbcPYjfqkavaLL3x360AlNRwYIiUka6pGwwTj5UEwGBrOQUOXZBXoHSp6kslwPnQAqoo7/Uh0GSOvDUao6P9HDeY11L3vkIbGOHPln6qx3m81BxPrlRRds2V+XCmHMLEFNEP9SKik5oO2VEXlU7VfgHvbDSegT6ylrdqpms4GI6VqvwAWYAj3oFelEcgO1AYdFl+475hzeJoNxApTK64kvl8XJqLaoMJB3NCeAWIxnJVu2aBkZ5sCpNLn+qx7ABoRemlXDpsQIquoQu7D4B9hq6PRDWyFCc1Q7jX6DoAobkhKbWXoUtHHaDpRfO7nN/UvgEvQvCWRSaq2B+i6mK48AZGz/5+RS6q2B+DQdGc0iIeTvjE0TDikarHuWv27/4Qp1YRPnvSEC7oRQPOUNPsh5T6AN69MtyvBUrn7H175p2rxHr5zkCG6ZbpLpVupWv9cQja4gYMdqhWkqWn9mUpQevGlB6C3ZLw+Cj+4QGNihYnWdtUk4uAvQAvbfMHRNaILy/wLE504VQOwz2kUFWJxsRfjFDOvtUH27ZR6gBBgoSufmLbidn3WlM3ZmjjGlBV9C/P9p+7Md2bSzZ59SFjRtwAVz+J5Pbr9tBvpUzX4RZBa2NwBRraGuTIolapBgDPiVrcNvhcmaPRO2ga3uHb9nolFjUumBa/MwwYwn7b7hV5RNU0qeRvcYg4+aXkZH90rDaGpjUUzGQjwTdvn2Wq8zW+PS407prmo3DPas/1H36x/1JAdGVv81elAIhXdADbrHe6MrNYk+q+0y23CqRoCrMvd7m6tlh/j27eHt7vx59Kwmsh+8sUJ8AEsjyuGbe5Hl6voOwG9f5zHkxLa4O778OMxLnRPkaphwNoughDjL74YgQoG9ve7U6voFjAWcz8HGXGfjANgbhp+jzICVVFhL/o/IA2sb/DILL5YAAmR8Rn2LGxwiwHy52x6mj5M7IHPNzM9e5k2VaNAm/J4XqpJnKpR4J48x+sJ+djgD/AG7vB3rtMVvL3AL/KEvsZOF4PT2uAOZFEi7ImIKiMvuscSExVii81zjgzSY6TFxDsJp73/HFR0B/zcdXHvGfrpqZMMnMwvqP/zqhbLKzJJLiq6BV2pLsbm/eoESzpFVgy2HOpGjE59jWZMf5+PDf6g3bG/X1rncOVL69fZMdglxeKPcR/KFlVHr1/yXXBr0G0xO101lhtzuldhg/CXpaKgnnTQWlyd9jNZN6tF12+iPB/PgQE96fuD2fu87VrrZnnZ2oqxg/nUSTqcdJP8jbur9+XZvGmqqpkOv04unx56RzoHGlE0NPY7g7sryY5B3yKoHR64HsqMiemNmZE+fLB3zuOg3xr1mDSpKbdGvTKz08KTZrNChijXnYGuH+OcQ0Q36uWbma9fPPIueohhSjddduPPyYH4l04MPw2edfbapKYxGNXpSw+XFyvHV3AzRt18nbxfT26fF8VicX8+e1yfDkvBt9zd8B9N6I6fZ9m48QAAAABJRU5ErkJggg==\" height=\"32px\" width=\"32px\" alt=\"attachment\" aria-hidden=\"true\">\n                " + ((stack1 = (helper = (helper = lookupProperty(helpers, "messageField") || (depth0 != null ? lookupProperty(depth0, "messageField") : depth0)) != null ? helper : alias2, typeof helper === alias3 ? helper.call(alias1, {
             "name": "messageField",
             "hash": {},
             "data": data,
             "loc": {
                 "start": {
-                    "line": 42,
+                    "line": 44,
                     "column": 16
                 },
                 "end": {
-                    "line": 42,
+                    "line": 44,
                     "column": 34
                 }
             }
@@ -2502,11 +2519,11 @@ const templateFunction = _handlebarsRuntimeDefault.default.template({
             "data": data,
             "loc": {
                 "start": {
-                    "line": 43,
+                    "line": 45,
                     "column": 16
                 },
                 "end": {
-                    "line": 43,
+                    "line": 45,
                     "column": 35
                 }
             }
@@ -2530,36 +2547,36 @@ const fields = {
     first_name: {
         name: 'first_name',
         placeholder: 'first_name',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     second_name: {
         name: 'seasecond_namerch',
         placeholder: 'second_name',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     display_name: {
         name: 'display_name',
         placeholder: 'display_name',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     login: {
         name: 'login',
         placeholder: 'login',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     email: {
         name: 'email',
         placeholder: 'email',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     phone: {
         name: 'phone',
         placeholder: 'phone',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     button: {
         name: 'save',
-        klass: 'profile-form__button'
+        className: 'profile-form__button'
     }
 };
 const buildHtmlProfile = ()=>{

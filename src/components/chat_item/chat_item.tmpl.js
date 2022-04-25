@@ -2,9 +2,9 @@ import chatTmpl from './chat_item.hbs';
 
 import './chat_item.scss';
 
-export const chat_item = ({name, last_message, date_last_message, image_link}) => chatTmpl({
+export const chat_item = ({name, lastMessage, dateLastMessage, imageLink}) => chatTmpl({
     name,
-    last_message,
-    date_last_message,
-    image_link
+    lastMessage,
+    dateLastMessage,
+    imageLink
 })

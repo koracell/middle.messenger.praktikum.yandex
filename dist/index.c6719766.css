@@ -11,7 +11,7 @@
   height: 450px;
   text-align: center;
   background: #fff;
-  border:  solid #0000001a;
+  border: 1px solid #0000001a;
   border-radius: 12px;
   position: absolute;
   top: 50%;
@@ -32,7 +32,7 @@
   height: 450px;
   text-align: center;
   background: #fff;
-  border:  solid #0000001a;
+  border: 1px solid #0000001a;
   border-radius: 12px;
   position: absolute;
   top: 50%;
@@ -97,7 +97,7 @@
   display: flex;
 }
 
-.chat-list__item {
+.chat-item {
   flex-basis: 75px;
   justify-content: flex-start;
   display: flex;

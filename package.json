@@ -25,6 +25,7 @@
     "util": "^0.12.4"
   },
   "dependencies": {
+    "dotenv": "^7.0.0",
     "handlebars": "^4.7.7"
   }
 }

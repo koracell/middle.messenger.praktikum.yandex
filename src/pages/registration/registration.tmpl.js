@@ -8,36 +8,36 @@ const fields = {
     firstName: {
         name: 'first_name',
         placeholder: 'first name',
-        klass: 'registration__firstName-input'
+        class: 'registration__firstName-input'
     },
     secondName: {
         name: 'second_name',
         placeholder: 'second name',
-        klass: 'registration__secondName-input'
+        class: 'registration__secondName-input'
     },
     login: {
         name: 'login',
         placeholder: 'login',
-        klass: 'registration__login-input'
+        class: 'registration__login-input'
     },
     email: {
         name: 'email',
         placeholder: 'email',
-        klass: 'registration__email-input'
+        class: 'registration__email-input'
     },
     phone: {
         name: 'phone',
         placeholder: 'phone',
-        klass: 'registration__phone-input'
+        class: 'registration__phone-input'
     },
     password: {
         name: 'password',
         placeholder: 'password',
-        klass: 'registration__password-input'
+        class: 'registration__password-input'
     },
     button: {
         name: 'Create account',
-        klass: 'registration__button-button'
+        class: 'registration__button-button'
     }
 }
 

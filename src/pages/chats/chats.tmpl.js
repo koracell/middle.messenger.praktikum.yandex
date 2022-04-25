@@ -4,24 +4,44 @@ import {button} from '../../components/button/button.tmpl'
 import tmpl from './chats.hbs'
 import './chats.scss';
 
+export const buildHtmlChats = () => {
+    let chatList = []
+    
+    chats.list.forEach(function(item, _i, _arr) {
+        chatList.push(chat_item(item))
+    })
+
+
+
+    return tmpl({
+        searchField: field(fields.search),
+        chatsList: chatList.join(''),
+        chat: chat_active,
+        messageField: field(fields.message_input),
+        messageButton: button(fields.message_button)
+    })
+}
+
+// TODO: вынести в отдельный файл
+
 const fields = {
     search: {
         name: 'search',
         placeholder: 'search',
-        klass: 'chats-search__input'
+        className: 'chats-search__input'
     },
     message_input: {
         name: 'message',
         placeholder: 'message',
-        klass: 'chat-view__form-message-input'
+        className: 'chat-view__form-message-input'
     },
     message_button: {
         name: 'send',
-        klass: 'chat-view__form-message-button'
+        className: 'chat-view__form-message-button'
     }
 }
 
-//  в дальнейшем будем получать список по api сервера из базы данных. 
+//  TODO в дальнейшем будем получать список по api сервера из базы данных. 
 const chats = {
     list: [
         {name: 'Andre', last_message: 'Whatsapp nigga? How are you? Whatsapp nigga? How are you?', date_last_message: '10:49', image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'},
@@ -42,20 +62,4 @@ const chat_active = {
         {content_type: 'image', body: 'https://ilounge.ua/files/uploads/new_4/sravnenie-apple-watch-6-i-se-6.jpg'},
     ],
     image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png',
-}
-
-export const buildHtmlChats = () => {
-    let chats_list_html = ''
-    
-    chats.list.forEach(function(item, i, arr) {
-        chats_list_html += (chat_item(item))
-    })
-
-    return tmpl({
-        searchField: field(fields.search),
-        chatsList: chats_list_html,
-        chat: chat_active,
-        messageField: field(fields.message_input),
-        messageButton: button(fields.message_button)
-    })
 }

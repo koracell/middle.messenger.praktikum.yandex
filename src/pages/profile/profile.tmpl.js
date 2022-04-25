@@ -7,36 +7,36 @@ const fields = {
     first_name: {
         name: 'first_name',
         placeholder: 'first_name',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     second_name: {
         name: 'seasecond_namerch',
         placeholder: 'second_name',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     display_name: {
         name: 'display_name',
         placeholder: 'display_name',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     login: {
         name: 'login',
         placeholder: 'login',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     email: {
         name: 'email',
         placeholder: 'email',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     phone: {
         name: 'phone',
         placeholder: 'phone',
-        klass: 'profile-form__input'
+        className: 'profile-form__input'
     },
     button: {
         name: 'save',
-        klass: 'profile-form__button'
+        className: 'profile-form__button'
     }
 }
 

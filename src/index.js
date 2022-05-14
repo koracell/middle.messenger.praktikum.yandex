@@ -1,7 +1,9 @@
-import {buildHtmlAuthorization} from "./pages/authorization/authorization.tmpl"
-import {buildHtmlRegistration} from "./pages/registration/registration.tmpl"
-import {buildHtmlChats} from "./pages/chats/chats.tmpl"
-import {buildHtmlProfile} from "./pages/profile/profile.tmpl"
+import { renderDOM } from './utils/renderDOM'
+import { AuthorizationPage } from './pages/authorization/authorization'
+import { RegistrationPage } from './pages/registration/registration'
+import { ChatsPage } from './pages/chats/chats'
+import { ProfilePage } from './pages/profile/profile'
+
 import './pages/error/error.scss'
 import tmpl_error from './pages/error/error.hbs'
 
@@ -11,16 +13,16 @@ const current_path = window.location.pathname
 
 switch(current_path) {
     case '/registration':
-        root.innerHTML = buildHtmlRegistration();
+        renderDOM('#root', new RegistrationPage())
         break;
     case '/authorization':
-        root.innerHTML = buildHtmlAuthorization();
+        renderDOM('#root', new AuthorizationPage())
         break;
     case '/chats':
-        root.innerHTML = buildHtmlChats();
+        renderDOM('#root', new ChatsPage())
         break;
     case('/profile'):
-        root.innerHTML = buildHtmlProfile();
+        renderDOM('#root', new ProfilePage())
         break;
     case('/500'):
         root.innerHTML = tmpl_error({errorStatus: '500', errorMessage: 'Мы уже фиксим'});

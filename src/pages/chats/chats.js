@@ -1,25 +1,37 @@
-import {field} from '../../components/field/field.tmpl'
-import {chat_item} from '../../components/chat_item/chat_item.tmpl'
-import {button} from '../../components/button/button.tmpl'
+import Block from '../../components/block'
+import { Button } from '../../components/button/button'
+import { Field } from '../../components/field/field'
+import { ChatItem } from '../../components/chat_item/chat_item'
+
 import tmpl from './chats.hbs'
 import './chats.scss';
 
-export const buildHtmlChats = () => {
-    let chatList = []
+export class ChatsPage extends Block {
+    constructor() {
+        super();
+    }
+
+    initChildren() {
+        let chatList = []
     
-    chats.list.forEach(function(item, _i, _arr) {
-        chatList.push(chat_item(item))
-    })
+        chats.list.forEach(function(item, _i, _arr) {
+            chatList.push(new ChatItem(item))
+        })
 
+        this.children.searchField = new Field({
+            name: 'search',
+            placeholder: 'search',
+            className: 'chats-search__input'
+         });
 
-
-    return tmpl({
-        searchField: field(fields.search),
-        chatsList: chatList.join(''),
-        chat: chat_active,
-        messageField: field(fields.message_input),
-        messageButton: button(fields.message_button)
-    })
+        this.children.chatsList = chatList;
+    }
+    
+    render() {
+        return this.compile(tmpl, { 
+            chat: chat_active
+         })
+    }
 }
 
 // TODO: вынести в отдельный файл

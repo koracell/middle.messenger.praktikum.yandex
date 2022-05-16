@@ -7,9 +7,9 @@ import { ProfilePage } from './pages/profile/profile'
 import './pages/error/error.scss'
 import tmpl_error from './pages/error/error.hbs'
 
-const root = document.getElementById('root')
+const root: HTMLElement = document.getElementById('root')
 
-const current_path = window.location.pathname
+const current_path: string = window.location.pathname
 
 switch(current_path) {
     case '/registration':
@@ -31,6 +31,6 @@ switch(current_path) {
         root.innerHTML = tmpl_error({errorStatus: '400', errorMessage: 'Не туда попали'});
         break;
     default:
-        window.location = '/authorization'
+        window.location.href = '/authorization'
         break;
   }

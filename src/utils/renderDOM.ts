@@ -1,4 +1,4 @@
-export function renderDOM(rootSelector: string, component) {
+export function renderDOM(rootSelector: string, component: any) {
    const root = document.querySelector(rootSelector);
 
    if (!root) {

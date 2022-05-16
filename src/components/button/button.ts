@@ -5,6 +5,7 @@ import '../../components/button/button.scss'
 interface ButtonProps {
    name: string;
    className: string;
+   events?: any;
 }
 
 export class Button extends Block {

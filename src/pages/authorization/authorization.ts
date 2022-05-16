@@ -14,7 +14,18 @@ export class AuthorizationPage extends Block {
     initChildren() {
         this.children.button = new Button({
             className: 'authorization__button-button',
-            name: 'Sign in'
+            name: 'Sign in',
+            events: {
+                click: function(event: any) {
+                    const elem_login = <HTMLInputElement>document.getElementsByName("login")[0]
+                    console.log(elem_login.value)
+                    
+                    const elem_password = <HTMLInputElement>document.getElementsByName("password")[0]
+                    console.log(elem_password.value)
+
+                    event.preventDefault();
+                }
+            }
          });
 
          this.children.passwordField = new Field({

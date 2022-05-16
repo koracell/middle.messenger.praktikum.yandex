@@ -15,14 +15,9 @@ export default class Block {
    props = null;
    eventBus = null;
    id = nanoid(6)
- 
-   /** JSDoc
-    * @param {string} tagName
-    * @param {Object} props
-    *
-    * @returns {void}
-    */
-   constructor(propsAndChildren = {}) {
+   children: Record<string, Block>
+
+   constructor(propsAndChildren: any = {}) {
      const eventBus = new EventBus();
 
      const { props, children } = this.getChildren(propsAndChildren);
@@ -43,14 +38,14 @@ export default class Block {
      eventBus.emit(Block.EVENTS.INIT);
    }
  
-   _registerEvents(eventBus) {
+   _registerEvents(eventBus: EventBus) {
      eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
      eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
      eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
      eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
    }
 
-   getChildren(propsAndChildren) {
+   getChildren(propsAndChildren: any) {
     const children = {};
     const props = {};
     
@@ -85,7 +80,7 @@ export default class Block {
      this.eventBus().emit(Block.EVENTS.FLOW_CDM)
    }
  
-   _componentDidUpdate(oldProps, newProps) {
+   _componentDidUpdate(oldProps: any, newProps: any) {
      const response = this.componentDidUpdate(oldProps, newProps);
      if(response) {
        this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
@@ -93,7 +88,7 @@ export default class Block {
    }
  
     // Может переопределять пользователь
-   componentDidUpdate(oldProps, newProps) {
+   componentDidUpdate(oldProps: any, newProps: any) {
      return true;
    }
  
@@ -111,24 +106,29 @@ export default class Block {
  
    _render() {
      const fragment = this.render();
-
-     const newElement = fragment.firstElementChild;
+     
+     const newElement = fragment.firstElementChild as HTMLElement;
 
      if (this._element) {
-       this._element.replaceWith(newElement)
+      this._removeEvents();
+      this._element.replaceWith(newElement)
      } 
 
      this._element = newElement
+
+     this._addEvents();
    }
  
     // Может переопределять пользователь
-   render() {}
+   render(): DocumentFragment {
+     return new DocumentFragment();
+   }
  
    getContent() {
      return this.element;
    }
  
-   _makePropsProxy(props) {
+   _makePropsProxy(props: any) {
      const self = this;
      
      return new Proxy(props, {
@@ -150,6 +150,31 @@ export default class Block {
    _createDocumentElement(tagName) {
      return document.createElement(tagName);
    }
+
+   _removeEvents() {
+     const events = this.props.events;
+
+     if (!events || !this._element) {
+       return;
+     }
+
+     Object.entries(events).forEach(([event, listener]) => {
+      this._element!.removeEventListener(event, listener) 
+     });
+   }
+
+   _addEvents() {
+    const events = this.props.events;
+
+    if (!events) {
+      return;
+    }
+    
+    Object.entries(events).forEach(([event, listener]) => {
+      this._element!.addEventListener(event, listener) 
+     });
+
+   }
  
    show() {
      this.getContent().style.display = 'block';
@@ -159,7 +184,7 @@ export default class Block {
      this.getContent().style.display = 'none';
    }
 
-   compile(template, context) {
+   compile(template: any, context: any) {
       // Отображаем сразу в дереве дивы с id
       const fragment = this._createDocumentElement('template');
 

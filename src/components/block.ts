@@ -1,6 +1,5 @@
 import EventBus from '../utils/event_bus'
 import { nanoid } from 'nanoid'
-import { Console } from 'console';
 
 export default class Block {
    static EVENTS = {

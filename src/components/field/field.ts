@@ -6,6 +6,7 @@ interface FieldProps {
    className: string;
    name: string;
    placeholder?: string;
+   events?: any;
 }
 
 export class Field extends Block {

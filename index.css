@@ -2,3 +2,7 @@ body {
     height: 100%;
     margin: 0;
 }
+
+.input-invalid {
+    background-color: pink;
+}

@@ -43,43 +43,109 @@ export class RegistrationPage extends Block {
          this.children.firstNameField = new Field({
             name: 'first_name',
             placeholder: 'first name',
-            className: 'registration__firstName-input'
+            className: 'registration__firstName-input',
+            events: {
+               blur: function(event: any) {
+                   const value = event.target.value
+
+                   if (/^[A-ZА-Я][A-Za-zА-Яа-я-]{1,20}$/.test(value)) {
+                       event.target.classList.remove('input-invalid')
+                   } else {
+                       event.target.classList.add('input-invalid')
+                   }
+
+               }
+           }
          });
 
          this.children.secondNameField = new Field({
             name: 'second_name',
             placeholder: 'second name',
-            className: 'registration__secondName-input'
+            className: 'registration__secondName-input',
+            events: {
+               blur: function(event: any) {
+                   const value = event.target.value
+
+                   if (/^[A-ZА-Я][A-Za-zА-Яа-я-]{1,20}$/.test(value)) {
+                       event.target.classList.remove('input-invalid')
+                   } else {
+                       event.target.classList.add('input-invalid')
+                   }
+
+               }
+           }
          });
 
          this.children.loginField = new Field({
             name: 'login',
             placeholder: 'login',
-            className: 'registration__login-input'
+            className: 'registration__login-input',
+            events: {
+               blur: function(event: any) {
+                   const value = event.target.value
+
+                   if (/^[A-Za-z][A-Za-z0-9_-]{2,20}$/.test(value)) {
+                       event.target.classList.remove('input-invalid')
+                   } else {
+                       event.target.classList.add('input-invalid')
+                   }
+
+               }
+           }
          });
 
          this.children.emailField = new Field({
             name: 'email',
             placeholder: 'email',
-            className: 'registration__email-input'
+            className: 'registration__email-input',
+            events: {
+               blur: function(event: any) {
+                   const value = event.target.value
+
+                   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+                       event.target.classList.remove('input-invalid')
+                   } else {
+                       event.target.classList.add('input-invalid')
+                   }
+
+               }
+           }
          });
 
          this.children.passwordField = new Field({
             name: 'password',
             placeholder: 'password',
-            className: 'registration__password-input'
+            className: 'registration__password-input',
+            events: {
+               blur: function(event: any) {
+                   const value = event.target.value
+
+                   if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,40}$/.test(value)) {
+                       event.target.classList.remove('input-invalid')
+                   } else {
+                       event.target.classList.add('input-invalid')
+                   }
+
+               }
+           }
          });
 
          this.children.phoneField = new Field({
             name: 'phone',
             placeholder: 'phone',
-            className: 'registration__phone-input'
-         });
+            className: 'registration__phone-input',
+            events: {
+               blur: function(event: any) {
+                   const value = event.target.value
 
-         this.children.phoneField = new Field({
-            name: 'phone',
-            placeholder: 'phone',
-            className: 'registration__phone-input'
+                   if (/^[+0-9][0-9]{8,15}$/.test(value)) {
+                       event.target.classList.remove('input-invalid')
+                   } else {
+                       event.target.classList.add('input-invalid')
+                   }
+
+               }
+           }
          });
     }
     

@@ -25,6 +25,30 @@ export class ChatsPage extends Block {
          });
 
         this.children.chatsList = chatList;
+
+        this.children.messageField = new Field({
+            name: 'message',
+            placeholder: 'message',
+            className: 'chat-view__form-message-input',
+            events: {
+                blur: function(event: any) {
+                    const value = event.target.value
+
+                    if (/^.+$/.test(value)) {
+                        event.target.classList.remove('input-invalid')
+                    } else {
+                        event.target.classList.add('input-invalid')
+                    }
+
+                }
+            }
+         });
+
+         this.children.messageButton = new Button({
+            name: 'send',
+            className: 'chat-view__form-message-button'
+         });
+        
     }
     
     render() {
@@ -34,24 +58,6 @@ export class ChatsPage extends Block {
     }
 }
 
-// TODO: вынести в отдельный файл
-
-const fields = {
-    search: {
-        name: 'search',
-        placeholder: 'search',
-        className: 'chats-search__input'
-    },
-    message_input: {
-        name: 'message',
-        placeholder: 'message',
-        className: 'chat-view__form-message-input'
-    },
-    message_button: {
-        name: 'send',
-        className: 'chat-view__form-message-button'
-    }
-}
 
 //  TODO в дальнейшем будем получать список по api сервера из базы данных. 
 const chats = {

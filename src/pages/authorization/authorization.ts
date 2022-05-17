@@ -6,14 +6,8 @@ import tmpl from '../authorization/authorization.hbs'
 
 import './authorization.scss';
 
-// interface FormData {
-//     login?: string;
-//     password?: number;
-// }
-
 export class AuthorizationPage extends Block {
     constructor() {
-        // const formData: FormData = { }
         super();
     }
     

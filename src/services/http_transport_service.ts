@@ -5,7 +5,7 @@ enum METHODS {
    DELETE ='DELETE',
 };
 
-function queryStringify(data) {
+function queryStringify(data: any) {
 if (typeof data !== 'object') {
       throw new Error('Data must be object');
 }
@@ -18,7 +18,7 @@ return keys.reduce((result, key, index) => {
 
 interface QueryOptions {
    timeout?: number;
-   headers?: string;
+   headers?: Record<string, string>;
    data?: XMLHttpRequestBodyInit;
    method?: METHODS; 
 }

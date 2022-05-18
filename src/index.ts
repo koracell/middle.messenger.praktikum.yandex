@@ -7,7 +7,7 @@ import { ProfilePage } from './pages/profile/profile'
 import './pages/error/error.scss'
 import tmpl_error from './pages/error/error.hbs'
 
-const root: HTMLElement = document.getElementById('root')
+const root: HTMLElement = document.getElementById('root')!
 
 const current_path: string = window.location.pathname
 

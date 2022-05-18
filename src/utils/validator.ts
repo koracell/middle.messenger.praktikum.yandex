@@ -1,5 +1,5 @@
 export default class Validator {
- testLogin(value) {
+ testLogin(value: string) {
    if (/^[A-Za-z][A-Za-z0-9_-]{2,20}$/.test(value)) {
       return true;
   } else {
@@ -7,7 +7,7 @@ export default class Validator {
    }
  }
  
- testPassword(value) {
+ testPassword(value: string) {
    if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,40}$/.test(value)) {
       return true;
   } else {
@@ -15,7 +15,7 @@ export default class Validator {
    }
  }
 
- testCommonName(value) {
+ testCommonName(value: string) {
    if (/^[A-ZА-Я][A-Za-zА-Яа-я-]{1,20}$/.test(value)) {
       return true;
   } else {
@@ -23,7 +23,7 @@ export default class Validator {
    }
  }
 
- testEmail(value) {
+ testEmail(value: string) {
    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
       return true;
   } else {
@@ -31,7 +31,7 @@ export default class Validator {
    }
  }
 
- testPhone(value) {
+ testPhone(value: string) {
    if (/^[+0-9][0-9]{8,15}$/.test(value)) {
       return true;
   } else {
@@ -39,7 +39,7 @@ export default class Validator {
    }
  }
 
- testMessage(value) {
+ testMessage(value: string) {
    if (/^.+$/.test(value)) {
       return true;
   } else {

@@ -13,7 +13,7 @@ export class ChatsPage extends Block {
     }
 
     initChildren() {
-        let chatList = []
+        let chatList: any = []
     
         chats.list.forEach(function(item, _i, _arr) {
             chatList.push(new ChatItem(item))

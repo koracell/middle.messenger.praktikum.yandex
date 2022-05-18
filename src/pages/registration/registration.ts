@@ -1,6 +1,7 @@
 import Block from '../../components/block'
 import { Button } from '../../components/button/button'
 import { Field } from '../../components/field/field';
+import Validator from '../../utils/validator';
 
 import tmpl from './registration.hbs'
 
@@ -48,7 +49,7 @@ export class RegistrationPage extends Block {
                blur: function(event: any) {
                    const value = event.target.value
 
-                   if (/^[A-ZА-Я][A-Za-zА-Яа-я-]{1,20}$/.test(value)) {
+                   if ((new Validator).testCommonName(value)) {
                        event.target.classList.remove('input-invalid')
                    } else {
                        event.target.classList.add('input-invalid')
@@ -66,7 +67,7 @@ export class RegistrationPage extends Block {
                blur: function(event: any) {
                    const value = event.target.value
 
-                   if (/^[A-ZА-Я][A-Za-zА-Яа-я-]{1,20}$/.test(value)) {
+                   if ((new Validator).testCommonName(value)) {
                        event.target.classList.remove('input-invalid')
                    } else {
                        event.target.classList.add('input-invalid')
@@ -84,7 +85,7 @@ export class RegistrationPage extends Block {
                blur: function(event: any) {
                    const value = event.target.value
 
-                   if (/^[A-Za-z][A-Za-z0-9_-]{2,20}$/.test(value)) {
+                   if ((new Validator).testLogin(value)) {
                        event.target.classList.remove('input-invalid')
                    } else {
                        event.target.classList.add('input-invalid')
@@ -102,7 +103,7 @@ export class RegistrationPage extends Block {
                blur: function(event: any) {
                    const value = event.target.value
 
-                   if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) {
+                   if ((new Validator).testEmail(value)) {
                        event.target.classList.remove('input-invalid')
                    } else {
                        event.target.classList.add('input-invalid')
@@ -120,7 +121,7 @@ export class RegistrationPage extends Block {
                blur: function(event: any) {
                    const value = event.target.value
 
-                   if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,40}$/.test(value)) {
+                   if ((new Validator).testPassword(value)) {
                        event.target.classList.remove('input-invalid')
                    } else {
                        event.target.classList.add('input-invalid')
@@ -138,7 +139,7 @@ export class RegistrationPage extends Block {
                blur: function(event: any) {
                    const value = event.target.value
 
-                   if (/^[+0-9][0-9]{8,15}$/.test(value)) {
+                   if ((new Validator).testPhone(value)) {
                        event.target.classList.remove('input-invalid')
                    } else {
                        event.target.classList.add('input-invalid')

@@ -2,6 +2,7 @@ import Block from '../../components/block'
 import { Button } from '../../components/button/button'
 import { Field } from '../../components/field/field'
 import { ChatItem } from '../../components/chat_item/chat_item'
+import Validator from '../../utils/validator'
 
 import tmpl from './chats.hbs'
 import './chats.scss';
@@ -34,7 +35,7 @@ export class ChatsPage extends Block {
                 blur: function(event: any) {
                     const value = event.target.value
 
-                    if (/^.+$/.test(value)) {
+                     if ((new Validator).testMessage(value)) {
                         event.target.classList.remove('input-invalid')
                     } else {
                         event.target.classList.add('input-invalid')

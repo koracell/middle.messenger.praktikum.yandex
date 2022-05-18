@@ -1,6 +1,7 @@
 import Block from '../../components/block'
 import { Button } from '../../components/button/button'
 import { Field } from '../../components/field/field';
+import Validator from '../../utils/validator';
 
 import tmpl from '../authorization/authorization.hbs'
 
@@ -37,7 +38,7 @@ export class AuthorizationPage extends Block {
                 blur: function(event: any) {
                     const value = event.target.value
 
-                    if (/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{7,40}$/.test(value)) {
+                    if ((new Validator).testPassword(value)) {
                         event.target.classList.remove('input-invalid')
                     } else {
                         event.target.classList.add('input-invalid')
@@ -55,7 +56,7 @@ export class AuthorizationPage extends Block {
                 blur: function(event: any) {
                     const value = event.target.value
 
-                    if (/^[A-Za-z][A-Za-z0-9_-]{2,20}$/.test(value)) {
+                    if ((new Validator).testLogin(value)) {
                         event.target.classList.remove('input-invalid')
                     } else {
                         event.target.classList.add('input-invalid')

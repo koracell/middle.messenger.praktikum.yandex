@@ -1,9 +1,10 @@
-const METHODS = {
-   GET: 'GET',
-   POST: 'POST',
-   PUT: 'PUT',
-   DELETE: 'DELETE',
+enum METHODS {
+   GET = 'GET',
+   POST =  'POST',
+   PUT = 'PUT',
+   DELETE ='DELETE',
 };
+
 function queryStringify(data) {
 if (typeof data !== 'object') {
       throw new Error('Data must be object');
@@ -19,27 +20,27 @@ interface QueryOptions {
    timeout?: number;
    headers?: string;
    data?: XMLHttpRequestBodyInit;
-   method?: string; 
+   method?: METHODS; 
 }
 
 class HTTPTransport {
-   get = (url, options: QueryOptions = {}) => {
+   get = (url: string, options: QueryOptions = {}) => {
          return this.request(url, {...options, method: METHODS.GET}, options.timeout);
    };
 
-   post = (url, options: QueryOptions = {}) => {
+   post = (url: string, options: QueryOptions = {}) => {
          return this.request(url, {...options, method: METHODS.POST}, options.timeout);
    };
 
-   put = (url, options: QueryOptions = {}) => {
+   put = (url: string, options: QueryOptions = {}) => {
          return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
    };
 
-   delete = (url, options: QueryOptions = {}) => { 
+   delete = (url: string, options: QueryOptions = {}) => { 
          return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
    };
 
-   request = (url, options: QueryOptions = {}, timeout = 5000) => {
+   request = (url: string, options: QueryOptions = {}, timeout = 5000) => {
          const {headers = {}, method, data} = options;
 
          return new Promise(function(resolve, reject) {

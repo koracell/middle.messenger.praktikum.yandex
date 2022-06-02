@@ -1,45 +1,64 @@
-import {field} from '../../components/field/field.tmpl'
-import {chat_item} from '../../components/chat_item/chat_item.tmpl'
-import {button} from '../../components/button/button.tmpl'
+import Block from '../../components/block'
+import { Button } from '../../components/button/button'
+import { Field } from '../../components/field/field'
+import { ChatItem } from '../../components/chat_item/chat_item'
+import Validator from '../../utils/validator'
+
 import tmpl from './chats.hbs'
 import './chats.scss';
 
-export const buildHtmlChats = () => {
-    let chatList = []
+export class ChatsPage extends Block {
+    constructor() {
+        super();
+    }
+
+    initChildren() {
+        let chatList: any = []
     
-    chats.list.forEach(function(item, _i, _arr) {
-        chatList.push(chat_item(item))
-    })
+        chats.list.forEach(function(item, _i, _arr) {
+            chatList.push(new ChatItem(item))
+        })
 
+        this.children.searchField = new Field({
+            name: 'search',
+            placeholder: 'search',
+            className: 'chats-search__input'
+         });
 
+        this.children.chatsList = chatList;
 
-    return tmpl({
-        searchField: field(fields.search),
-        chatsList: chatList.join(''),
-        chat: chat_active,
-        messageField: field(fields.message_input),
-        messageButton: button(fields.message_button)
-    })
-}
+        this.children.messageField = new Field({
+            name: 'message',
+            placeholder: 'message',
+            className: 'chat-view__form-message-input',
+            events: {
+                blur: function(event: any) {
+                    const value = event.target.value
 
-// TODO: вынести в отдельный файл
+                     if ((new Validator).testMessage(value)) {
+                        event.target.classList.remove('input-invalid')
+                    } else {
+                        event.target.classList.add('input-invalid')
+                    }
 
-const fields = {
-    search: {
-        name: 'search',
-        placeholder: 'search',
-        className: 'chats-search__input'
-    },
-    message_input: {
-        name: 'message',
-        placeholder: 'message',
-        className: 'chat-view__form-message-input'
-    },
-    message_button: {
-        name: 'send',
-        className: 'chat-view__form-message-button'
+                }
+            }
+         });
+
+         this.children.messageButton = new Button({
+            name: 'send',
+            className: 'chat-view__form-message-button'
+         });
+        
+    }
+    
+    render() {
+        return this.compile(tmpl, { 
+            chat: chat_active
+         })
     }
 }
+
 
 //  TODO в дальнейшем будем получать список по api сервера из базы данных. 
 const chats = {

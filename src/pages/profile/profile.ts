@@ -1,11 +1,12 @@
 import Block from '../../components/block'
 import { Field } from '../../components/field/field';
 import { Button } from '../../components/button/button';
+import { withStore } from '../../utils/Store';
 
 import tmpl from './profile.hbs'
 import './profile.scss';
 
-export class ProfilePage extends Block {
+class ProfilePage extends Block {
     constructor() {
         super();
     }
@@ -14,11 +15,11 @@ export class ProfilePage extends Block {
         this.children.firstNameField = new Field({
             name: 'first_name',
             placeholder: 'first_name',
-            className: 'profile-form__input'
+            className: 'profile-form__input',
         });
 
         this.children.secondNameField = new Field({
-            name: 'seasecond_namerch',
+            name: 'second_name',
             placeholder: 'second_name',
             className: 'profile-form__input'
         });
@@ -35,7 +36,7 @@ export class ProfilePage extends Block {
             className: 'profile-form__input'
         });
 
-        this.children.emailField = new Field({
+        this .children.emailField = new Field({
             name: 'email',
             placeholder: 'email',
             className: 'profile-form__input'
@@ -59,3 +60,7 @@ export class ProfilePage extends Block {
         })
     }
 }
+
+const withUser = withStore((state) => ({...state.currentUser}))
+
+export default withUser(ProfilePage)

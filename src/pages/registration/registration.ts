@@ -1,13 +1,14 @@
 import Block from '../../components/block'
 import { Button } from '../../components/button/button'
 import { Field } from '../../components/field/field';
+import AuthController from '../../controllers/AuthController';
 import Validator from '../../utils/validator';
 
 import tmpl from './registration.hbs'
 
 import './registration.scss';
 
-export class RegistrationPage extends Block {
+export class RegistrationPage extends Block {    
     constructor() {
         super();
     }
@@ -19,22 +20,22 @@ export class RegistrationPage extends Block {
             events: {
                click: function(event: any) {
                   const elem_first_name = <HTMLInputElement>document.getElementsByName("first_name")[0]
-                  console.log(elem_first_name.value)
-                  
                   const elem_second_name = <HTMLInputElement>document.getElementsByName("second_name")[0]
-                  console.log(elem_second_name.value)
-
                   const elem_login = <HTMLInputElement>document.getElementsByName("login")[0]
-                  console.log(elem_login.value)
-
                   const elem_email = <HTMLInputElement>document.getElementsByName("email")[0]
-                  console.log(elem_email.value)
-
                   const elem_password = <HTMLInputElement>document.getElementsByName("password")[0]
-                  console.log(elem_password.value)
-
                   const elem_phone = <HTMLInputElement>document.getElementsByName("phone")[0]
-                  console.log(elem_phone.value)
+
+                  const user = {
+                    first_name: elem_first_name.value,
+                    second_name: elem_second_name.value,
+                    login: elem_login.value,
+                    email: elem_email.value,
+                    password: elem_password.value,
+                    phone: elem_phone.value
+                  }
+
+                  AuthController.signUp(user);
                   
                   event.preventDefault();
                }

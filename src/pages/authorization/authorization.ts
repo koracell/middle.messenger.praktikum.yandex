@@ -1,6 +1,7 @@
 import Block from '../../components/block'
 import { Button } from '../../components/button/button'
 import { Field } from '../../components/field/field';
+import AuthController from '../../controllers/AuthController';
 import Validator from '../../utils/validator';
 
 import tmpl from '../authorization/authorization.hbs'
@@ -20,13 +21,29 @@ export class AuthorizationPage extends Block {
             events: {
                 click: function(event: any) {
                     const elem_login = <HTMLInputElement>document.getElementsByName("login")[0]
-                    console.log(elem_login.value)
-                    
                     const elem_password = <HTMLInputElement>document.getElementsByName("password")[0]
-                    console.log(elem_password.value)
+
+                    const user = {
+                        login: elem_login.value,
+                        password: elem_password.value 
+                    }
+                    
+                    AuthController.signIn(user)
 
                     event.preventDefault();
                 }
+            }
+         });
+
+         this.children.logout = new Button({
+            name: 'Logout',
+            className: 'registration__button-button',
+            events: {
+               click: function(event: any) {
+                  AuthController.logout();
+                  
+                  event.preventDefault();
+               }
             }
          });
 

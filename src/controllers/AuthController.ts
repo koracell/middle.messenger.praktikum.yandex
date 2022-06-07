@@ -1,4 +1,5 @@
 import AuthAPI, { SignInData, SignUpData } from "../api/AuthAPI";
+import Router from "../utils/Router";
 import Store from "../utils/Store";
 
 class AuthController {
@@ -22,22 +23,28 @@ class AuthController {
     if (response.status !== 200) {
       throw new Error(`Неуспешный ответ. Код ошибки: ${response.status}: ${JSON.parse(response.response).reason}`)
     }
+
+    Router.__instance.go('/chats')
   }
 
   async logout() {
-    const response: any = this.api.logout()
+    const response: any = await this.api.logout()
 
     if (response.status !== 200) {
       throw new Error(`Неуспешный ответ. Код ошибки: ${response.status}: ${JSON.parse(response.response).reason}`)
     }
 
+    Router.__instance.go('/authorization')
   }
 
   async fetchUser() {
     const response: any = await this.api.read();
     const user = response.response
 
-    Store.set('currentUser', user)
+    if (response.status == 200) {
+      Store.set('currentUser', user)  
+    }
+
   }
 }
 

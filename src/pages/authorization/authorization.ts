@@ -2,7 +2,9 @@ import Block from '../../components/block'
 import { Button } from '../../components/button/button'
 import { Field } from '../../components/field/field';
 import AuthController from '../../controllers/AuthController';
+import Router from '../../utils/Router';
 import Validator from '../../utils/validator';
+import store from '../../utils/Store';
 
 import tmpl from '../authorization/authorization.hbs'
 
@@ -11,6 +13,9 @@ import './authorization.scss';
 export class AuthorizationPage extends Block {
     constructor() {
         super();
+        if (store?.getState()?.currentUser) {
+            return Router.__instance.go('/chats')            
+        }
     }
     
 

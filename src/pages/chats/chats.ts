@@ -3,6 +3,7 @@ import { Button } from '../../components/button/button'
 import { Field } from '../../components/field/field'
 import { ChatItem } from '../../components/chat_item/chat_item'
 import Validator from '../../utils/validator'
+import AuthController from '../../controllers/AuthController'
 
 import tmpl from './chats.hbs'
 import './chats.scss';
@@ -13,6 +14,18 @@ export class ChatsPage extends Block {
     }
 
     initChildren() {
+        this.children.logout = new Button({
+            name: 'Logout',
+            className: 'registration__button-button',
+            events: {
+               click: function(event: any) {
+                  AuthController.logout();
+                  
+                  event.preventDefault();
+               }
+            }
+         });
+
         let chatList: any = []
     
         chats.list.forEach(function(item, _i, _arr) {

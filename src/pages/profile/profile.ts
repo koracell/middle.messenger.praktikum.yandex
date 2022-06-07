@@ -6,6 +6,7 @@ import { withStore } from '../../utils/Store';
 import tmpl from './profile.hbs'
 import './profile.scss';
 import UserController from '../../controllers/UserController';
+import Router from '../../utils/Router';
 
 class ProfilePage extends Block {
     constructor(propsStore: any) {
@@ -71,7 +72,9 @@ class ProfilePage extends Block {
                         phone: phone.value
                     }
 
-                    UserController.update(user)
+                    UserController.update(user).then(() => {
+                        Router.__instance.go('/profile')
+                    })
                 }
             }
         });

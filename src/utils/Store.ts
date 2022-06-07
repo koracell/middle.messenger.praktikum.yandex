@@ -13,6 +13,7 @@ class Store extends EventBus {
   }
 
   public set(path: string, value: unknown) {
+    console.log('value', value)
     set(this.state, path, value);
 
     this.emit(StoreEvents.Updated);
@@ -26,12 +27,15 @@ export const withStore = (mapStateToProps: (state: any) => Record<string, unknow
 
   return class extends Component {
     constructor(props: any) {
-      state = mapStateToProps(store.getState());  
+      // state = mapStateToProps(store.getState());  
+      state = store.getState()
+      
       
       super({...props, ...state});
 
       store.on(StoreEvents.Updated, ()=> {
-        const newState = mapStateToProps(store.getState());
+        // const newState = mapStateToProps(store.getState());
+        const newState = store.getState();
 
         if (!isEqual(state, newState)) {
           this.setProps({

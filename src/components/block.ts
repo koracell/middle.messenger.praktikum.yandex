@@ -29,6 +29,7 @@ export default class Block {
  
      this._registerEvents(eventBus);
      eventBus.emit(Block.EVENTS.INIT);
+     eventBus.emit(Block.EVENTS.FLOW_CDM)
    }
  
    _registerEvents(eventBus: EventBus) {

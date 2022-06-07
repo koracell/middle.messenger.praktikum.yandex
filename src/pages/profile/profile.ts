@@ -5,10 +5,12 @@ import { withStore } from '../../utils/Store';
 
 import tmpl from './profile.hbs'
 import './profile.scss';
+import UserController from '../../controllers/UserController';
 
 class ProfilePage extends Block {
-    constructor() {
-        super();
+    constructor(propsStore: any) {
+        console.log('propsStore', propsStore)
+        super(propsStore);
     }
 
     initChildren() {
@@ -50,9 +52,41 @@ class ProfilePage extends Block {
 
         this.children.button = new Button({
             name: 'save',
-            className: 'profile-form__button'
+            className: 'profile-form__button',
+            events: {
+                click: function(event: any) {
+                    const first_name = <HTMLInputElement>document.getElementsByName("first_name")[0]
+                    const second_name = <HTMLInputElement>document.getElementsByName("second_name")[0]
+                    const display_name = <HTMLInputElement>document.getElementsByName("display_name")[0]
+                    const login = <HTMLInputElement>document.getElementsByName("login")[0]
+                    const email = <HTMLInputElement>document.getElementsByName("email")[0]
+                    const phone = <HTMLInputElement>document.getElementsByName("phone")[0]
+
+                    const user = {
+                        first_name: first_name.value,
+                        second_name: second_name.value,
+                        display_name: display_name.value,
+                        login: login.value,
+                        email: email.value,
+                        phone: phone.value
+                    }
+
+                    UserController.update(user)
+                }
+            }
         });
     }
+
+    componentDidMount() {
+        this.children.firstNameField.setValue(this.props?.currentUser?.first_name)
+        this.children.secondNameField.setValue(this.props?.currentUser?.second_name)
+        this.children.displayNameField.setValue(this.props?.currentUser?.display_name)
+        this.children.loginField.setValue(this.props?.currentUser?.login)
+        this.children.emailField.setValue(this.props?.currentUser?.email)
+        this.children.phoneField.setValue(this.props?.currentUser?.phone)
+    }
+
+
     
     render() {
         return this.compile(tmpl, { 

@@ -6,16 +6,10 @@ import { ErrorPage } from './pages/error/error'
 import Router from './utils/Router'
 import AuthController from './controllers/AuthController'
 
-try {
-    AuthController.fetchUser();    
-} catch (error) {
-    console.log('Error fetching user', error)
-}
-
-
 const router = new Router("#root");
 
-router
+AuthController.fetchUser().then(() => {
+    router
     .use("/authorization", AuthorizationPage)
     .use("/registration", RegistrationPage)
     .use("/chats", ChatsPage)
@@ -24,3 +18,4 @@ router
     .use("/404", ErrorPage)
     .use("/", AuthorizationPage)
     .start()
+})

@@ -10,7 +10,6 @@ import Router from '../../utils/Router';
 
 class ProfilePage extends Block {
     constructor(propsStore: any) {
-        console.log('propsStore', propsStore)
         super(propsStore);
     }
 

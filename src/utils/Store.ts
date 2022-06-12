@@ -26,7 +26,7 @@ export const withStore = (mapStateToProps: (state: any) => Record<string, unknow
 
   return class extends Component {
     constructor(props: any) {
-      // state = mapStateToProps(store.getState());  
+      // state = mapStateToProps(store.getState()); 
       state = store.getState()
       
       

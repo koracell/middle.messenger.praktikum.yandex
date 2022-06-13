@@ -1,6 +1,6 @@
 ## Описание
 
-Ссылка на [PullRequest sprint_2](https://github.com/koracell/middle.messenger.praktikum.yandex/pull/2)
+Ссылка на [PullRequest sprint_3](https://github.com/koracell/middle.messenger.praktikum.yandex/pull/3)
 
 [Ссылка на макеты](https://www.figma.com/file/jF5fFFzgGOxQeB4CmKWTiE/Chat_external_link?node-id=0%3A1)
 
@@ -17,3 +17,6 @@
 - http://localhost:3000/profile
 - http://localhost:3000/500
 - http://localhost:3000/404
+
+## Run test
+npm run test

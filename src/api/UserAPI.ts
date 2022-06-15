@@ -19,10 +19,7 @@ export default class UserAPI extends BaseAPI {
     }
 
     putAvatar(data): Promise<unknown> {
-        return this.http.put('/profile/avatar', {
-            headers: { 'content-type': 'multipart/form-data' },
-            data: data 
-        });
+        return this.http.put('/profile/avatar', data);
     }
 
 

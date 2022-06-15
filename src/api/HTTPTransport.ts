@@ -93,7 +93,7 @@ export default class HTTPTransport {
             const isMultiPartHeader = headers?.['content-type'] === 'multipart/form-data';
             console.log('headers', headers)
             console.log('isMultiPartHeader', isMultiPartHeader)
-            const headerKeys = Object.keys(!isMultiPartHeader ? {} : headers);
+            const headerKeys = Object.keys(!isMultiPartHeader ? headers : {});
             console.log('headerKeys', headerKeys)
 
             if (headerKeys.length) {

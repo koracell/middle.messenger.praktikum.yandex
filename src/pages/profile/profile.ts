@@ -84,10 +84,10 @@ class ProfilePage extends Block {
             events: {
                 click: function(event: any) {
                     var form = document.forms.namedItem("avatar_image");
-                    // const avatar_input = document.querySelector('#file_avatar');
+                    const avatar_input = document.querySelector('#file_avatar');
+                    const formData = new FormData();
+                    formData.append('avatar', avatar_input.files[0])
                     
-                    const formData = new FormData(form);
-                    // formData.append('avatar', avatar_input.files[0])
                     console.log('file na', formData.get('avatar'))
 
                     UserController.updateAvatar(formData).then(() => {

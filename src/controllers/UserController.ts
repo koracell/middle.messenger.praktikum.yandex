@@ -21,6 +21,21 @@ class UserController {
     })
 
   }
+
+  async updateAvatar(data) {
+    const response: any = await this.api.putAvatar(data);
+
+    if (response.status !== 200) {
+      throw new Error(`Неуспешный ответ. Код ошибки: ${response.status}: ${JSON.parse(response.response).reason}`)
+    }
+
+    console.log(response.response)
+    
+    AuthController.fetchUser().then(() => {
+      Router.go("/profile")
+    })
+
+  }
 }
 
 export default new UserController();

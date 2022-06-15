@@ -42,15 +42,18 @@ export default class HTTPTransport {
    };
 
    put = (path: string, data: unknown) => {
-         return this.request(this.endpoint + path, {data, method: METHODS.PUT});
+         return this.request(this.endpoint + path, {...data, method: METHODS.PUT});
    };
 
    delete = (path: string, data: unknown) => { 
          return this.request(this.endpoint + path, {data, method: METHODS.DELETE});
    };
 
-   request = (url: string, options: Options = {method: METHODS.GET}, ) => {
+   request = (url: string, options: Options = {method: METHODS.GET}) => {
+         console.log('options', options)
          const {headers = {}, method, data} = options;
+         console.log('data', data?.get('avatar'))
+         console.log('method', method)
 
          return new Promise(function(resolve, reject) {
             if (!method) {
@@ -86,12 +89,30 @@ export default class HTTPTransport {
             xhr.ontimeout = reject
             
             xhr.setRequestHeader('Content-Type', 'application/json');
+
+            const isMultiPartHeader = headers?.['content-type'] === 'multipart/form-data';
+            console.log('headers', headers)
+            console.log('isMultiPartHeader', isMultiPartHeader)
+            const headerKeys = Object.keys(!isMultiPartHeader ? {} : headers);
+            console.log('headerKeys', headerKeys)
+
+            if (headerKeys.length) {
+                headerKeys.forEach((key) => {
+                    console.log('headers[key]', headers[key])
+                    xhr.setRequestHeader(key, headers[key]);
+                });
+            }
+            console.log('xhr', xhr)
+
             xhr.withCredentials = true;
             xhr.responseType = 'json'
 
                
             if (isGet || !data) {
                   xhr.send();
+            } else if (isMultiPartHeader) {
+                  console.log('data in se', data.get('avatar'))
+                  xhr.send(data)
             } else {
                   xhr.send(JSON.stringify(data));
             }

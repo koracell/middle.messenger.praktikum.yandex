@@ -1,5 +1,16 @@
 <div class="page-profile">
     <img class="profile-avatar" src="{{avatar}}" alt="avatar" width="100px" height="100px">
+    <br>
+    <form action='' enctype="multipart/form-data" name="avatar_image">    
+        <label for="file">Загрузите новый аватар</label>
+        <br>
+        <input type="file" id="file_avatar" name="avatar">
+            
+        <div>
+            <br>
+            {{{buttonChangeAvatar}}}
+        </div>
+    </form>
     <form action="" class="profile-form__form">
         {{{firstNameField}}}
         {{{secondNameField}}}

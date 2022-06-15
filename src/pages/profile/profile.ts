@@ -77,6 +77,29 @@ class ProfilePage extends Block {
                 }
             }
         });
+
+        this.children.buttonChangeAvatar = new Button({
+            name: 'save',
+            className: 'profile-form__button',
+            events: {
+                click: function(event: any) {
+                    var form = document.forms.namedItem("avatar_image");
+                    // const avatar_input = document.querySelector('#file_avatar');
+                    
+                    const formData = new FormData(form);
+                    // formData.append('avatar', avatar_input.files[0])
+                    console.log('file na', formData.get('avatar'))
+
+                    UserController.updateAvatar(formData).then(() => {
+                        console.log('Ura')
+                    })
+
+                    event.preventDefault();
+                }
+            }
+        });
+
+    
     }
 
     componentDidMount() {

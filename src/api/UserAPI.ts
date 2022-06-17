@@ -19,7 +19,11 @@ export default class UserAPI extends BaseAPI {
     }
 
     putAvatar(data): Promise<unknown> {
-        return this.http.put('/profile/avatar', data);
+        return this.http.put('/profile/avatar', data, true);
+    }
+
+    putPassword(data): Promise<unknown> {
+        return this.http.put('/password', data);
     }
 
 

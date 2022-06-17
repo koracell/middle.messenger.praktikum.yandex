@@ -22,7 +22,8 @@ type Options = {
       timeout?: number
       method?: METHODS
       withCredentials?: boolean
-      mode?: string
+      mode?: string,
+      typeFormData?: boolean
   };
 
 export default class HTTPTransport {
@@ -41,8 +42,8 @@ export default class HTTPTransport {
          return this.request(this.endpoint + path, {data, method: METHODS.POST}, );
    };
 
-   put = (path: string, data: unknown) => {
-         return this.request(this.endpoint + path, {data, method: METHODS.PUT});
+   put = (path: string, data: unknown, typeFormData = false) => {
+         return this.request(this.endpoint + path, {data, method: METHODS.PUT, typeFormData: typeFormData});
    };
 
    delete = (path: string, data: unknown) => { 
@@ -51,7 +52,7 @@ export default class HTTPTransport {
 
    request = (url: string, options: Options = {method: METHODS.GET}) => {
          console.log('options', options)
-         const {headers = {}, method, data} = options;
+         const {headers = {}, method, data, typeFormData } = options;
 
          return new Promise(function(resolve, reject) {
             if (!method) {
@@ -86,16 +87,16 @@ export default class HTTPTransport {
 
             xhr.ontimeout = reject
             
-            // xhr.setRequestHeader('Content-Type', 'application/json');
+            if (!typeFormData) {
+                  xhr.setRequestHeader('Content-Type', 'application/json');
+            }
 
             xhr.withCredentials = true;
             xhr.responseType = 'json'
-
                
             if (isGet || !data) {
                   xhr.send();
-            } else if (method === METHODS.PUT) {
-                  console.log('data in se', data.get('avatar'))
+            } else if (method === METHODS.PUT && typeFormData) {
                   xhr.send(data)
             } else {
                   xhr.send(JSON.stringify(data));

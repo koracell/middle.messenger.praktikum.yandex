@@ -83,15 +83,47 @@ class ProfilePage extends Block {
             className: 'profile-form__button',
             events: {
                 click: function(event: any) {
-                    var form = document.forms.namedItem("avatar_image");
                     const avatar_input = document.querySelector('#file_avatar');
                     const formData = new FormData();
                     formData.append('avatar', avatar_input.files[0])
                     
-                    console.log('file na', formData.get('avatar'))
 
                     UserController.updateAvatar(formData).then(() => {
-                        console.log('Ura')
+                        console.log('Avatar updated')
+                    })
+
+                    event.preventDefault();
+                }
+            }
+        });
+
+        this.children.oldPasswordField = new Field({
+            name: 'old_password',
+            placeholder: 'old password',
+            className: 'old-password-form__input'
+        });
+
+        this.children.newPasswordField = new Field({
+            name: 'new_password',
+            placeholder: 'new password',
+            className: 'new-password-form__input'
+        });
+
+        this.children.buttonChangePassword = new Button({
+            name: 'save',
+            className: 'password-form__button',
+            events: {
+                click: function(event: any) {
+                    const old_password = <HTMLInputElement>document.getElementsByName("old_password")[0]
+                    const new_password = <HTMLInputElement>document.getElementsByName("new_password")[0]
+
+                    const data_password = {
+                        oldPassword: old_password.value,
+                        newPassword: new_password.value,
+                    }
+                    
+                    UserController.updatePassword(data_password).then(() => {
+                        console.log('Password updated')
                     })
 
                     event.preventDefault();
@@ -115,7 +147,7 @@ class ProfilePage extends Block {
     
     render() {
         return this.compile(tmpl, { 
-            avatar: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'
+            avatar: 'https://ya-praktikum.tech/api/v2/resources/' + this.props.currentUser.avatar
         })
     }
 }

@@ -26,15 +26,17 @@ export const withStore = (mapStateToProps: (state: any) => Record<string, unknow
 
   return class extends Component {
     constructor(props: any) {
-      // state = mapStateToProps(store.getState()); 
       state = store.getState()
-      
+      console.log('state before on', state.current_chat)
       
       super({...props, ...state});
 
       store.on(StoreEvents.Updated, ()=> {
-        // const newState = mapStateToProps(store.getState());
         const newState = store.getState();
+        console.log('in store on')
+        console.log(!isEqual(state, newState))
+        console.log('state', state.current_chat)
+        console.log('newState', newState.current_chat)
 
         if (!isEqual(state, newState)) {
           this.setProps({

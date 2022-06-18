@@ -51,7 +51,6 @@ export default class HTTPTransport {
    };
 
    request = (url: string, options: Options = {method: METHODS.GET}) => {
-         console.log('options', options)
          const {headers = {}, method, data, typeFormData } = options;
 
          return new Promise(function(resolve, reject) {

@@ -6,11 +6,13 @@ import { ErrorPage } from './pages/error/error'
 import Router from './utils/Router'
 import AuthController from './controllers/AuthController'
 import ChatController from './controllers/ChatController'
+import store from './utils/Store'
 
 const router = new Router("#root");
 
 
 getAllResourses().then(() => {
+    store.set('current_chat', store.getState().chats[0])
     router
             .use("/authorization", AuthorizationPage)
             .use("/registration", RegistrationPage)

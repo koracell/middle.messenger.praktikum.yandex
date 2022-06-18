@@ -7,19 +7,18 @@ import AuthController from '../../controllers/AuthController'
 
 import tmpl from './chats.hbs'
 import './chats.scss';
-import { withStore } from '../../utils/Store'
+import store, { withStore } from '../../utils/Store'
 import { Modal } from '../../components/modal/modal'
 import ChatController from '../../controllers/ChatController'
 import { ModalAddDeleteUser } from '../../components/modalAddDeleteUser/modal'
+import EventBus from '../../utils/event_bus'
 
 class ChatsPage extends Block {
     constructor(propsStore: any) {
-        console.log('propsStore', propsStore)
         super(propsStore);
     }
 
     initChildren() {
-        console.log('init props', this.children)
         this.children.logout = new Button({
             name: 'Logout',
             className: 'logout button',
@@ -198,14 +197,29 @@ class ChatsPage extends Block {
     }
 
     componentDidMount() {
-        console.log(this.props?.chats)
+        console.log('Did mount', store.getState().current_chat)
+    }
+
+    componentDidUpdate(_oldProps: any, _newProps: any): boolean {
+        console.log(`Old propd: ${_oldProps}, New props: ${_newProps}`)
     }
     
     render() {
         let chatList: any = []
+        console.log('this.props?', this.props.chats)
     
         this.props?.chats.forEach(function(item, _i, _arr) {
-            chatList.push(new ChatItem(item))
+            chatList.push(new ChatItem({
+                ...item,
+                events: {
+                    click: function(event: any) {
+                        const current_chat = store.getState().chats.find(x => x.id === item.id)
+                        store.set('current_chat', current_chat)
+                        
+                        console.log(store.getState().current_chat)
+                    }
+                 }
+            }))
         })
 
         this.children.searchField = new Field({
@@ -217,6 +231,7 @@ class ChatsPage extends Block {
         this.children.chatsList = chatList;
 
         return this.compile(tmpl, { 
+            current_chat: store.getState().current_chat,
             chat: chat_active
          })
     }

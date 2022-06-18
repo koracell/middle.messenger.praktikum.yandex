@@ -8,6 +8,8 @@ import './profile.scss';
 import UserController from '../../controllers/UserController';
 import Router from '../../utils/Router';
 
+import Validator from '../../utils/validator';
+
 class ProfilePage extends Block {
     constructor(propsStore: any) {
         super(propsStore);
@@ -35,19 +37,55 @@ class ProfilePage extends Block {
         this.children.loginField = new Field({
             name: 'login',
             placeholder: 'login',
-            className: 'profile-form__input'
+            className: 'profile-form__input',
+            events: {
+                blur: function(event: any) {
+                    const value = event.target.value
+
+                    if ((new Validator).testLogin(value)) {
+                        event.target.classList.remove('input-invalid')
+                    } else {
+                        event.target.classList.add('input-invalid')
+                    }
+
+                }
+            }
         });
 
         this .children.emailField = new Field({
             name: 'email',
             placeholder: 'email',
-            className: 'profile-form__input'
+            className: 'profile-form__input',
+            events: {
+                blur: function(event: any) {
+                    const value = event.target.value
+
+                    if ((new Validator).testEmail(value)) {
+                        event.target.classList.remove('input-invalid')
+                    } else {
+                        event.target.classList.add('input-invalid')
+                    }
+
+                }
+            }
         });
 
         this.children.phoneField = new Field({
             name: 'phone',
             placeholder: 'phone',
-            className: 'profile-form__input'
+            className: 'profile-form__input',
+            events: {
+                blur: function(event: any) {
+                    const value = event.target.value
+
+                    if ((new Validator).testPhone(value)) {
+                        event.target.classList.remove('input-invalid')
+                    } else {
+                        event.target.classList.add('input-invalid')
+                    }
+
+                }
+            }
         });
 
         this.children.button = new Button({
@@ -100,13 +138,37 @@ class ProfilePage extends Block {
         this.children.oldPasswordField = new Field({
             name: 'old_password',
             placeholder: 'old password',
-            className: 'old-password-form__input'
+            className: 'old-password-form__input',
+            events: {
+                blur: function(event: any) {
+                    const value = event.target.value
+
+                    if ((new Validator).testPassword(value)) {
+                        event.target.classList.remove('input-invalid')
+                    } else {
+                        event.target.classList.add('input-invalid')
+                    }
+
+                }
+            }
         });
 
         this.children.newPasswordField = new Field({
             name: 'new_password',
             placeholder: 'new password',
-            className: 'new-password-form__input'
+            className: 'new-password-form__input',
+            events: {
+                blur: function(event: any) {
+                    const value = event.target.value
+
+                    if ((new Validator).testPassword(value)) {
+                        event.target.classList.remove('input-invalid')
+                    } else {
+                        event.target.classList.add('input-invalid')
+                    }
+
+                }
+            }
         });
 
         this.children.buttonChangePassword = new Button({

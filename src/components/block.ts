@@ -87,11 +87,9 @@ export default class Block {
    }
  
    setProps = (nextProps: any) => {
-    console.log('in setProps') 
     if (!nextProps) {
        return;
      }
-     
      Object.assign(this.props, nextProps);
    };
  

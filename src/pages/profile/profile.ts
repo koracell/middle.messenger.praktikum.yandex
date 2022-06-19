@@ -1,7 +1,6 @@
 import Block from '../../components/block'
 import { Field } from '../../components/field/field';
 import { Button } from '../../components/button/button';
-import { withStore } from '../../utils/Store';
 
 import tmpl from './profile.hbs'
 import './profile.scss';
@@ -9,8 +8,9 @@ import UserController from '../../controllers/UserController';
 import Router from '../../utils/Router';
 
 import Validator from '../../utils/validator';
+import Store from '../../utils/Store';
 
-class ProfilePage extends Block {
+export default class ProfilePage extends Block {
     constructor(propsStore: any) {
         super(propsStore);
     }
@@ -197,23 +197,19 @@ class ProfilePage extends Block {
     }
 
     componentDidMount() {
-        this.children.firstNameField.setValue(this.props?.currentUser?.first_name)
-        this.children.secondNameField.setValue(this.props?.currentUser?.second_name)
-        this.children.displayNameField.setValue(this.props?.currentUser?.display_name)
-        this.children.loginField.setValue(this.props?.currentUser?.login)
-        this.children.emailField.setValue(this.props?.currentUser?.email)
-        this.children.phoneField.setValue(this.props?.currentUser?.phone)
+        this.children.firstNameField.setValue(this.props?.user?.first_name)
+        this.children.secondNameField.setValue(this.props?.user?.second_name)
+        this.children.displayNameField.setValue(this.props?.user?.display_name)
+        this.children.loginField.setValue(this.props?.user?.login)
+        this.children.emailField.setValue(this.props?.user?.email)
+        this.children.phoneField.setValue(this.props?.user?.phone)
     }
 
 
     
     render() {
         return this.compile(tmpl, { 
-            avatar: 'https://ya-praktikum.tech/api/v2/resources/' + this.props.currentUser.avatar
+            avatar: 'https://ya-praktikum.tech/api/v2/resources/' + this.props.user.avatar
         })
     }
 }
-
-const withUser = withStore((state) => ({...state.currentUser}))
-
-export default withUser(ProfilePage)

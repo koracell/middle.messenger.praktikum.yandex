@@ -7,13 +7,12 @@ import AuthController from '../../controllers/AuthController'
 
 import tmpl from './chats.hbs'
 import './chats.scss';
-import store, { withStore } from '../../utils/Store'
+import store from '../../utils/Store'
 import { Modal } from '../../components/modal/modal'
 import ChatController from '../../controllers/ChatController'
 import { ModalAddDeleteUser } from '../../components/modalAddDeleteUser/modal'
-import EventBus from '../../utils/event_bus'
 
-class ChatsPage extends Block {
+export default class ChatsPage extends Block {
     constructor(propsStore: any) {
         super(propsStore);
     }
@@ -197,26 +196,23 @@ class ChatsPage extends Block {
     }
 
     componentDidMount() {
-        console.log('Did mount', store.getState().current_chat)
+
     }
 
     componentDidUpdate(_oldProps: any, _newProps: any): boolean {
-        console.log(`Old propd: ${_oldProps}, New props: ${_newProps}`)
+        return true;
     }
     
     render() {
         let chatList: any = []
-        console.log('this.props?', this.props.chats)
-    
+
         this.props?.chats.forEach(function(item, _i, _arr) {
             chatList.push(new ChatItem({
                 ...item,
                 events: {
                     click: function(event: any) {
-                        const current_chat = store.getState().chats.find(x => x.id === item.id)
-                        store.set('current_chat', current_chat)
-                        
-                        console.log(store.getState().current_chat)
+                        const activeChat = store.getState().chats.find(x => x.id === item.id)
+                        ChatController.setCurrentChat(activeChat)
                     }
                  }
             }))
@@ -229,17 +225,13 @@ class ChatsPage extends Block {
          });
 
         this.children.chatsList = chatList;
-
+    
         return this.compile(tmpl, { 
-            current_chat: store.getState().current_chat,
+            current_chat: this.props.activeChat,
             chat: chat_active
          })
     }
 }
-
-const withChats = withStore((state) => ({...state.chats}))
-
-export default withChats(ChatsPage)
 
 const chat_active = {
     name: 'Silvestor Stalone',

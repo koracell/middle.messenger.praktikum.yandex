@@ -1,4 +1,6 @@
 import ChatAPI, {ChatData} from "../api/ChatAPI";
+import Route from "../utils/Route";
+import Router from "../utils/Router";
 import Store from "../utils/Store";
 
 class ChatController {
@@ -11,7 +13,6 @@ class ChatController {
   async create(data: ChatData) {
     console.log('data', data)
     const response: any = await this.api.create(data);
-    console.log('response create', response.response)
 
     if (response.status !== 200) {
       throw new Error(`Неуспешный ответ. Код ошибки: ${response.status}: ${JSON.parse(response.response).reason}`)
@@ -46,6 +47,10 @@ class ChatController {
     if (response.status !== 200) {
       throw new Error(`Неуспешный ответ. Код ошибки: ${response.status}: ${JSON.parse(response.response).reason}`)
     }
+  }
+
+  setCurrentChat(current_chat: any) {
+    Store.set('activeChat', current_chat)
   }
 }
 

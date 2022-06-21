@@ -21,7 +21,7 @@ class ChatController {
       const response: any = await this.api.get()
   
       if (response.status !== 200) {
-        throw new Error(`Неуспешный ответ. Код ошибки: ${response.status}: ${JSON.parse(response.response).reason}`)
+        console.log(`Неуспешный ответ. Код ошибки: ${response.status}`)
       }
 
       const chats = response.response

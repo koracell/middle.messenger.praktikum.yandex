@@ -30,5 +30,4 @@ function connect(mapStateToProps: (state: Indexed) => Indexed) {
 export const withUser = connect((state) => ({user: state.currentUser}));
 export const withChats = connect((state) => ({chats: state.chats}));
 export const withActiveChat = connect((state) => ({activeChat: state.activeChat}));
-// export const withMessages = connect((state) => ({messages: state.messages}));
-// export const withSocket = connect((state) => ({socket: state.socket}));
+export const withSocket = connect((state) => ({socket: state.socket}));

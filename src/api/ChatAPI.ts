@@ -24,4 +24,12 @@ export default class ChatAPI extends BaseAPI {
     deleteUser(data: ChatData): Promise<unknown> {
         return this.http.delete('/users', data);
     }
+
+    getChatUsers(id: any) {
+        return this.http.get(`/${id}/users`)
+    }
+
+    getChatToken(id) {
+        return this.http.post(`/token/${id}`)
+    }
 }

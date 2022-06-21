@@ -33,9 +33,9 @@
             </div>
         </div>
         <div class="chat-view__content">
-            {{#each chat.messages}}
+            {{#each messages}}
                 <div class="chat-content__item">
-                    <div class="chat-content-inner">{{this.body}}</div>
+                    <div class="chat-content-inner">{{this.content}}</div>
                 </div>
             {{/each}}
         </div>

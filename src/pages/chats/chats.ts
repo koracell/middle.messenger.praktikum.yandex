@@ -11,6 +11,8 @@ import store from '../../utils/Store'
 import { Modal } from '../../components/modal/modal'
 import ChatController from '../../controllers/ChatController'
 import { ModalAddDeleteUser } from '../../components/modalAddDeleteUser/modal'
+import { SocketBuilder } from '../../utils/socketBuilder'
+import Store from '../../utils/Store'
 
 export default class ChatsPage extends Block {
     constructor(propsStore: any) {
@@ -81,14 +83,24 @@ export default class ChatsPage extends Block {
                     } else {
                         event.target.classList.add('input-invalid')
                     }
-
                 }
             }
          });
 
          this.children.messageButton = new Button({
             name: 'send',
-            className: 'chat-view__form-message-button'
+            className: 'chat-view__form-message-button',
+            events: {
+                click: function(event: any) {
+                    const message = <HTMLInputElement>document.getElementsByName("message")[0]                    
+                    Store.getState().socket.send(
+                        JSON.stringify({
+                            content: message.value,
+                            type: 'message',
+                        })
+                    )
+                }
+            }
          });
         
          this.children.modalCreateChat = new Modal({
@@ -210,9 +222,21 @@ export default class ChatsPage extends Block {
             chatList.push(new ChatItem({
                 ...item,
                 events: {
-                    click: function(event: any) {
+                    click: async function(event: any) {
                         const activeChat = store.getState().chats.find(x => x.id === item.id)
+                        ChatController.getChatToken(activeChat.id)
                         ChatController.setCurrentChat(activeChat)
+
+                        await ChatController.getChatUsers(activeChat.id); 
+                        await ChatController.getChatToken(activeChat.id);
+
+                        const socket = new SocketBuilder(
+                            await Store.getState().currentUser!.id,
+                            await activeChat.id,
+                            await Store.getState().activeChat.token,
+                        )
+                        
+                        Store.set('socket', socket.socket);
                     }
                  }
             }))
@@ -228,17 +252,7 @@ export default class ChatsPage extends Block {
     
         return this.compile(tmpl, { 
             current_chat: this.props.activeChat,
-            chat: chat_active
+            messages: Store.getState().activeChat.messages
          })
     }
-}
-
-const chat_active = {
-    name: 'Silvestor Stalone',
-    messages: [
-        {content_type: 'text', body: 'Привет всем. Тут всплыл один вопрос. Есть ли Луна? Привет всем. Тут всплыл один вопрос. Есть ли Луна?'},
-        {content_type: 'text', body: 'Привет всем. Конечно есть, я на ней играл в футбол. Привет всем. Конечно есть, я на ней играл в футбол. Привет всем. Конечно есть, я на ней играл в футбол.'},
-        {content_type: 'image', body: 'https://ilounge.ua/files/uploads/new_4/sravnenie-apple-watch-6-i-se-6.jpg'},
-    ],
-    image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png',
 }

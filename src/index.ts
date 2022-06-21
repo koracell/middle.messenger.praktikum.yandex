@@ -7,17 +7,18 @@ import Router from './utils/Router'
 import AuthController from './controllers/AuthController'
 import ChatController from './controllers/ChatController'
 import store from './utils/Store'
-import { withActiveChat, withChats, withUser } from './utils/connect'
+import { withActiveChat, withChats, withSocket, withUser } from './utils/connect'
 
 const router = new Router("#root");
 
 
 getAllResourses().then(() => {
-    store.set('activeChat', store.getState().chats[0])
+    const current_chat = store.getState().chats[0]
+    ChatController.setCurrentChat(current_chat)
     router
             .use("/authorization", AuthorizationPage)
             .use("/registration", RegistrationPage)
-            .use("/chats", withActiveChat(withChats(ChatsPage)))
+            .use("/chats", withSocket(withActiveChat(withChats(ChatsPage))))
             .use("/profile", withUser(ProfilePage))
             .use("/500", ErrorPage)
             .use("/404", ErrorPage)

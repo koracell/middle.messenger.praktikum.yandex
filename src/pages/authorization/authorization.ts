@@ -13,9 +13,6 @@ import './authorization.scss';
 export class AuthorizationPage extends Block {
     constructor() {
         super();
-        if (store?.getState()?.currentUser) {
-            return Router.__instance.go('/chats')            
-        }
     }
     
 
@@ -90,6 +87,9 @@ export class AuthorizationPage extends Block {
     }
     
     render() {
+        if (store?.getState()?.currentUser) {
+            return Router.__instance.go('/chats')            
+        }
         return this.compile(tmpl, { })
     }
 }

@@ -224,19 +224,18 @@ export default class ChatsPage extends Block {
                 events: {
                     click: async function(event: any) {
                         const activeChat = store.getState().chats.find(x => x.id === item.id)
-                        ChatController.getChatToken(activeChat.id)
-                        ChatController.setCurrentChat(activeChat)
-
-                        await ChatController.getChatUsers(activeChat.id); 
-                        await ChatController.getChatToken(activeChat.id);
+                        await ChatController.getChatToken(activeChat.id)
+                        await ChatController.getChatUsers(activeChat.id)
 
                         const socket = new SocketBuilder(
                             await Store.getState().currentUser!.id,
                             await activeChat.id,
                             await Store.getState().activeChat.token,
                         )
-                        
+
                         Store.set('socket', socket.socket);
+
+                        await ChatController.setCurrentChat(activeChat)
                     }
                  }
             }))
@@ -252,7 +251,7 @@ export default class ChatsPage extends Block {
     
         return this.compile(tmpl, { 
             current_chat: this.props.activeChat,
-            messages: Store.getState().activeChat.messages
+            messages: Store.getState().activeChat?.messages
          })
     }
 }

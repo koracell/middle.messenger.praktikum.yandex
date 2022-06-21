@@ -49,11 +49,6 @@ class ChatController {
 
   async setCurrentChat(current_chat: any) {
     Store.set('activeChat', current_chat)
-    
-    await Store.getState().socket.send(JSON.stringify({
-      content: '0',
-      type: 'get old',
-    }))
   }
 
   async getChatUsers(id: any) {
@@ -74,6 +69,7 @@ class ChatController {
 
     const token = response.response.token
     const activeChat = await Store.getState().activeChat
+
     if (activeChat) {
       Store.set('activeChat', {...activeChat, token})
     } else {

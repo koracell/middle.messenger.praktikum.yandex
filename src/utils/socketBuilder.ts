@@ -5,11 +5,16 @@ import { isPlainObject } from './helpers';
 export class SocketBuilder {
     socket: WebSocket;
 
-    constructor(userId: number, chatId: number, token: string) {
+     constructor(userId: number, chatId: number, token: string) {
         this.socket = new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`);
 
         this.socket.addEventListener('open', () => {
             console.log('Соединение установлено');
+
+            this.socket.send(JSON.stringify({
+              content: '0',
+              type: 'get old',
+          }));
         });
       
         this.socket.addEventListener('close', event => {

@@ -11,7 +11,5 @@ export default class BaseAPI {
 
   request() { throw new Error('Not implemented'); }
 
-  // update() { throw new Error('Not implemented') }
-
   delete() { throw new Error('Not implemented'); }
 }

@@ -14,6 +14,7 @@ const router = new Router("#root");
 
 
 getAllResourses().then(() => {
+    window.store = Store
     if (Store.getState().currentUser) {
         const activeChat = Store.getState().chats[0]
     

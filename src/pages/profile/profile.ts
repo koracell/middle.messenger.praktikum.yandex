@@ -8,7 +8,6 @@ import UserController from '../../controllers/UserController';
 import Router from '../../utils/Router';
 
 import Validator from '../../utils/validator';
-import Store from '../../utils/Store';
 
 export default class ProfilePage extends Block {
     constructor(propsStore: any) {

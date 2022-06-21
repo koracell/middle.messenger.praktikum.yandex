@@ -20,11 +20,12 @@
         <div class="chat-view__header">
             <div class="chat-view__inner">
                 <div class="chat-view__avatar">
-                    <img src="{{chat.image_link}}" alt="avatar" width="40" height="40">
+                    <img src="https://ya-praktikum.tech/api/v2/resources/{{current_chat.avatar}}" alt="avatar" width="40" height="40">
                 </div>
                 <div class="chat-view__name">
                     {{current_chat.title}}
                 </div>
+                {{{changeAvatarButton}}}
             </div>
             <div class="chat-view__menu">
                 <a href="/profile">
@@ -51,4 +52,5 @@
     {{{modalCreateChat}}}
     {{{modalAddUserToChat}}}
     {{{modalDeleteUserFromChat}}}
+    {{{modalChangeAvatar}}}
 </div>

@@ -1,5 +1,7 @@
 import ChatAPI, {ChatData} from "../api/ChatAPI";
+import Router from "../utils/Router";
 import Store from "../utils/Store";
+import AuthController from "./AuthController";
 
 class ChatController {
   private api: ChatAPI;
@@ -80,6 +82,18 @@ class ChatController {
     if (response.status !== 200) {
       throw new Error(`Неуспешный ответ. Код ошибки: ${response.status}: ${JSON.parse(response.response).reason}`)
     }
+  }
+
+  async updateAvatar(data: any) {
+    const response: any = await this.api.putAvatar(data);
+
+    if (response.status !== 200) {
+      throw new Error(`Неуспешный ответ. Код ошибки: ${response.status}: ${JSON.parse(response.response).reason}`)
+    }
+
+    console.log(response.response)
+    
+    Router.__instance.go("/chats")
   }
 
 }

@@ -26,6 +26,4 @@ export default class UserAPI extends BaseAPI {
         return this.http.put('/password', data);
     }
 
-
-
 }

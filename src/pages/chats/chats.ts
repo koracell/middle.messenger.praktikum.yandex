@@ -13,6 +13,7 @@ import ChatController from '../../controllers/ChatController'
 import { ModalAddDeleteUser } from '../../components/modalAddDeleteUser/modal'
 import { SocketBuilder } from '../../utils/socketBuilder'
 import Store from '../../utils/Store'
+import { ModalChangeAvatar } from '../../components/modalChangeAvatar/modal'
 
 export default class ChatsPage extends Block {
     constructor(propsStore: any) {
@@ -101,6 +102,65 @@ export default class ChatsPage extends Block {
                     )
                 }
             }
+         });
+
+         this.children.changeAvatarButton = new Button({
+            name: 'Change Avatar',
+            className: 'chat-view__change-avatar-button',
+            events: {
+                click: function(event: any) {
+                   const modal = document.querySelector('.modal__avatar-change')
+                   modal.style.display = 'flex';
+                   event.preventDefault();
+                }
+             }
+         });
+
+         this.children.modalChangeAvatar = new ModalChangeAvatar({
+            modalClass: 'modal__avatar-change',
+            buttonChangeAvatar: new Button({
+                name: 'save',
+                className: 'profile-form__button',
+                events: {
+                    click: function(event: any) {
+                        const avatar_input = document.querySelector('#file_chat_avatar');
+                        const activeChatID = store.getState().activeChat.id
+                        const formData = new FormData();
+                        formData.append('chatId', activeChatID)
+                        formData.append('avatar', avatar_input.files[0])
+                        
+                        const modal = document.querySelector('.modal__avatar-change')
+                        modal.style.display = 'none';
+
+                        ChatController.updateAvatar(formData).then(() => {
+                            console.log('Avatar updated')
+                        })
+
+                        event.preventDefault();
+                    }
+                }
+            }),
+
+            createChat: new Button({
+                name: 'Create chat',
+                className: 'create-chat button',
+                events: {
+                   click: function(event: any) {
+                    const chat_name = <HTMLInputElement>document.getElementsByName("chat-name")[0]
+
+                    const chat = {
+                      title: chat_name.value 
+                    }
+
+                    ChatController.create(chat).then(() => {
+                        const modal = document.querySelector('.modal__chat-create')
+                        modal.style.display = 'none';
+                    })
+
+                    event.preventDefault();
+                   }
+                }
+            })
          });
         
          this.children.modalCreateChat = new Modal({

@@ -32,4 +32,8 @@ export default class ChatAPI extends BaseAPI {
     getChatToken(id) {
         return this.http.post(`/token/${id}`)
     }
+
+    putAvatar(data): Promise<unknown> {
+        return this.http.put('/avatar', data, true);
+    }
 }

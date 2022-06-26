@@ -3,29 +3,73 @@ import { Button } from '../../components/button/button'
 import { Field } from '../../components/field/field'
 import { ChatItem } from '../../components/chat_item/chat_item'
 import Validator from '../../utils/validator'
+import AuthController from '../../controllers/AuthController'
 
 import tmpl from './chats.hbs'
 import './chats.scss';
+import store from '../../utils/Store'
+import { Modal } from '../../components/modal/modal'
+import ChatController from '../../controllers/ChatController'
+import { ModalAddDeleteUser } from '../../components/modalAddDeleteUser/modal'
+import { SocketBuilder } from '../../utils/socketBuilder'
+import Store from '../../utils/Store'
+import { ModalChangeAvatar } from '../../components/modalChangeAvatar/modal'
 
-export class ChatsPage extends Block {
-    constructor() {
-        super();
+export default class ChatsPage extends Block {
+    constructor(propsStore: any) {
+        super(propsStore);
     }
 
     initChildren() {
-        let chatList: any = []
-    
-        chats.list.forEach(function(item, _i, _arr) {
-            chatList.push(new ChatItem(item))
-        })
-
-        this.children.searchField = new Field({
-            name: 'search',
-            placeholder: 'search',
-            className: 'chats-search__input'
+        this.children.logout = new Button({
+            name: 'Logout',
+            className: 'logout button',
+            events: {
+               click: function(event: any) {
+                  AuthController.logout();
+                  
+                  event.preventDefault();
+               }
+            }
          });
 
-        this.children.chatsList = chatList;
+         this.children.createChat = new Button({
+            name: 'Create chat',
+            className: 'create-chat button',
+            events: {
+               click: function(event: any) {
+                  const modal = document.querySelector('.modal__chat-create')
+                  modal.style.display = 'flex';
+                  event.preventDefault();
+               }
+            }
+         });
+
+         this.children.addUserToChat = new Button({
+            name: 'Add user to chat',
+            className: 'add-user-to-chat button',
+            events: {
+               click: function(event: any) {                 
+                  const modal = document.querySelector('.modal__add-user-create')
+                  modal.style.display = 'flex';
+
+                  event.preventDefault();
+               }
+            }
+         });
+
+         this.children.deleteUserFromChat = new Button({
+            name: 'Delete user to chat',
+            className: 'delete-user-to-chat button',
+            events: {
+               click: function(event: any) {                 
+                  const modal = document.querySelector('.modal__delete-user-create')
+                  modal.style.display = 'flex';
+
+                  event.preventDefault();
+               }
+            }
+         });
 
         this.children.messageField = new Field({
             name: 'message',
@@ -40,45 +84,234 @@ export class ChatsPage extends Block {
                     } else {
                         event.target.classList.add('input-invalid')
                     }
-
                 }
             }
          });
 
          this.children.messageButton = new Button({
             name: 'send',
-            className: 'chat-view__form-message-button'
+            className: 'chat-view__form-message-button',
+            events: {
+                click: function(event: any) {
+                    const message = <HTMLInputElement>document.getElementsByName("message")[0]                    
+                    Store.getState().socket.send(
+                        JSON.stringify({
+                            content: message.value,
+                            type: 'message',
+                        })
+                    )
+                }
+            }
+         });
+
+         this.children.changeAvatarButton = new Button({
+            name: 'Change Avatar',
+            className: 'chat-view__change-avatar-button',
+            events: {
+                click: function(event: any) {
+                   const modal = document.querySelector('.modal__avatar-change')
+                   modal.style.display = 'flex';
+                   event.preventDefault();
+                }
+             }
+         });
+
+         this.children.modalChangeAvatar = new ModalChangeAvatar({
+            modalClass: 'modal__avatar-change',
+            buttonChangeAvatar: new Button({
+                name: 'save',
+                className: 'profile-form__button',
+                events: {
+                    click: function(event: any) {
+                        const avatar_input = document.querySelector('#file_chat_avatar');
+                        const activeChatID = store.getState().activeChat.id
+                        const formData = new FormData();
+                        formData.append('chatId', activeChatID)
+                        formData.append('avatar', avatar_input.files[0])
+                        
+                        const modal = document.querySelector('.modal__avatar-change')
+                        modal.style.display = 'none';
+
+                        ChatController.updateAvatar(formData).then(() => {
+                            console.log('Avatar updated')
+                        })
+
+                        event.preventDefault();
+                    }
+                }
+            }),
+
+            createChat: new Button({
+                name: 'Create chat',
+                className: 'create-chat button',
+                events: {
+                   click: function(event: any) {
+                    const chat_name = <HTMLInputElement>document.getElementsByName("chat-name")[0]
+
+                    const chat = {
+                      title: chat_name.value 
+                    }
+
+                    ChatController.create(chat).then(() => {
+                        const modal = document.querySelector('.modal__chat-create')
+                        modal.style.display = 'none';
+                    })
+
+                    event.preventDefault();
+                   }
+                }
+            })
          });
         
+         this.children.modalCreateChat = new Modal({
+            modalClass: 'modal__chat-create',
+            titleField: new Field({
+                name: 'chat-name',
+                placeholder: 'Сhat name',
+                className: 'chats-name__input'
+            }),
+            createChat: new Button({
+                name: 'Create chat',
+                className: 'create-chat button',
+                events: {
+                   click: function(event: any) {
+                    const chat_name = <HTMLInputElement>document.getElementsByName("chat-name")[0]
+
+                    const chat = {
+                      title: chat_name.value 
+                    }
+
+                    ChatController.create(chat).then(() => {
+                        const modal = document.querySelector('.modal__chat-create')
+                        modal.style.display = 'none';
+                    })
+
+                    event.preventDefault();
+                   }
+                }
+            })
+         });
+
+         this.children.modalAddUserToChat = new ModalAddDeleteUser({
+            modalClass: 'modal__add-user-create',
+            userIdField: new Field({
+                name: 'user-id',
+                placeholder: 'User id',
+                className: 'user-id__input'
+            }),
+            chatIdField: new Field({
+                name: 'chat-id',
+                placeholder: 'Chat id',
+                className: 'chat-id__input'
+            }),
+            
+            button: new Button({
+                name: 'Add user to chat',
+                className: 'add-user-to-chat button',
+                events: {
+                   click: function(event: any) {
+                    const user_id = <HTMLInputElement>document.getElementsByName("user-id")[0]
+                    const chat_id = <HTMLInputElement>document.getElementsByName("chat-id")[0]
+
+                    const data = {
+                      users: [user_id.value],
+                      chatId: chat_id.value
+                    }
+
+                    ChatController.addUser(data).then(() => {
+                        const modal = document.querySelector('.modal__add-user-create')
+                        modal.style.display = 'none';
+                    })
+
+                    event.preventDefault();
+                   }
+                }
+            })
+         });
+
+         this.children.modalDeleteUserFromChat = new ModalAddDeleteUser({
+            modalClass: 'modal__delete-user-create',
+            userIdField: new Field({
+                name: 'user-id',
+                placeholder: 'User id',
+                className: 'user-id__input'
+            }),
+            chatIdField: new Field({
+                name: 'chat-id',
+                placeholder: 'Chat id',
+                className: 'chat-id__input'
+            }),
+            
+            button: new Button({
+                name: 'Delete user to chat',
+                className: 'delete-user-to-chat button',
+                events: {
+                   click: function(event: any) {
+                    const user_id = <HTMLInputElement>document.getElementsByName("user-id")[0]
+                    const chat_id = <HTMLInputElement>document.getElementsByName("chat-id")[0]
+
+                    const data = {
+                      users: [user_id.value],
+                      chatId: chat_id.value
+                    }
+
+                    ChatController.deleteUser(data).then(() => {
+                        const modal = document.querySelector('.modal__delete-user-create')
+                        modal.style.display = 'none';
+                    })
+
+                    event.preventDefault();
+                   }
+                }
+            })
+         });
+    }
+
+    componentDidMount() {
+
+    }
+
+    componentDidUpdate(_oldProps: any, _newProps: any): boolean {
+        return true;
     }
     
     render() {
+        let chatList: any = []
+
+        this.props?.chats.forEach(function(item, _i, _arr) {
+            chatList.push(new ChatItem({
+                ...item,
+                events: {
+                    click: async function(event: any) {
+                        const activeChat = store.getState().chats.find(x => x.id === item.id)
+                        await ChatController.getChatToken(activeChat.id)
+                        await ChatController.getChatUsers(activeChat.id)
+
+                        const socket = new SocketBuilder(
+                            await Store.getState().currentUser!.id,
+                            await activeChat.id,
+                            await Store.getState().activeChat.token,
+                        )
+
+                        Store.set('socket', socket.socket);
+
+                        await ChatController.setCurrentChat(activeChat)
+                    }
+                 }
+            }))
+        })
+
+        this.children.searchField = new Field({
+            name: 'search',
+            placeholder: 'search',
+            className: 'chats-search__input'
+         });
+
+        this.children.chatsList = chatList;
+    
         return this.compile(tmpl, { 
-            chat: chat_active
+            current_chat: this.props.activeChat,
+            messages: Store.getState().activeChat?.messages
          })
     }
-}
-
-
-//  TODO в дальнейшем будем получать список по api сервера из базы данных. 
-const chats = {
-    list: [
-        {name: 'Andre', last_message: 'Whatsapp nigga? How are you? Whatsapp nigga? How are you?', date_last_message: '10:49', image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'},
-        {name: 'Violla', last_message: 'Whatsapp nigga? How are you?', date_last_message: '11:49', image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'},
-        {name: 'Violla', last_message: 'Whatsapp nigga? How are you?', date_last_message: '11:49', image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'},
-        {name: 'Violla', last_message: 'Whatsapp nigga? How are you?', date_last_message: '11:49', image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'},
-        {name: 'Violla', last_message: 'Whatsapp nigga? How are you?', date_last_message: '11:49', image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'},
-        {name: 'Violla', last_message: 'Whatsapp nigga? How are you?', date_last_message: '11:49', image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'},
-        {name: 'Violla', last_message: 'Whatsapp nigga? How are you?', date_last_message: '11:49', image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png'},
-    ]
-}
-
-const chat_active = {
-    name: 'Silvestor Stalone',
-    messages: [
-        {content_type: 'text', body: 'Привет всем. Тут всплыл один вопрос. Есть ли Луна? Привет всем. Тут всплыл один вопрос. Есть ли Луна?'},
-        {content_type: 'text', body: 'Привет всем. Конечно есть, я на ней играл в футбол. Привет всем. Конечно есть, я на ней играл в футбол. Привет всем. Конечно есть, я на ней играл в футбол.'},
-        {content_type: 'image', body: 'https://ilounge.ua/files/uploads/new_4/sravnenie-apple-watch-6-i-se-6.jpg'},
-    ],
-    image_link: 'https://cdn-icons-png.flaticon.com/512/147/147144.png',
 }

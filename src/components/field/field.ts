@@ -14,6 +14,10 @@ export class Field extends Block {
       super(props);
    }
 
+   public setValue(value: string) {
+      (this.element as HTMLInputElement).value = value;
+   }
+
    render() {
       return this.compile(tmpl, {...this.props})
    }

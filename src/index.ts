@@ -1,36 +1,56 @@
-import { renderDOM } from './utils/renderDOM'
 import { AuthorizationPage } from './pages/authorization/authorization'
 import { RegistrationPage } from './pages/registration/registration'
-import { ChatsPage } from './pages/chats/chats'
-import { ProfilePage } from './pages/profile/profile'
+import ChatsPage from './pages/chats/chats'
+import ProfilePage from './pages/profile/profile'
+import { ErrorPage } from './pages/error/error'
+import Router from './utils/Router'
+import AuthController from './controllers/AuthController'
+import ChatController from './controllers/ChatController'
+import Store from './utils/Store'
+import { withActiveChat, withChats, withSocket, withUser } from './utils/connect'
+import { SocketBuilder } from './utils/socketBuilder'
 
-import './pages/error/error.scss'
-import tmpl_error from './pages/error/error.hbs'
+const router = new Router("#root");
 
-const root: HTMLElement = document.getElementById('root')!
 
-const current_path: string = window.location.pathname
+getAllResourses().then(() => {
+    window.store = Store
+    if (Store.getState().currentUser) {
+        const activeChat = Store.getState().chats[0]
+    
+        ChatController.getChatToken(activeChat.id).then(async () => {
+            await ChatController.getChatUsers(activeChat.id)
+            
+            const socket = new SocketBuilder(
+                await Store.getState().currentUser!.id,
+                activeChat.id,
+                await Store.getState().activeChat.token,
+            )
+            
+            Store.set('socket', socket.socket);
+    
+            ChatController.setCurrentChat(activeChat)
+        }) 
+    }
 
-switch(current_path) {
-    case '/registration':
-        renderDOM('#root', new RegistrationPage())
-        break;
-    case '/authorization':
-        renderDOM('#root', new AuthorizationPage())
-        break;
-    case '/chats':
-        renderDOM('#root', new ChatsPage())
-        break;
-    case('/profile'):
-        renderDOM('#root', new ProfilePage())
-        break;
-    case('/500'):
-        root.innerHTML = tmpl_error({errorStatus: '500', errorMessage: 'Мы уже фиксим'});
-        break;
-    case('/404'):
-        root.innerHTML = tmpl_error({errorStatus: '400', errorMessage: 'Не туда попали'});
-        break;
-    default:
-        window.location.href = '/authorization'
-        break;
-  }
+    router
+                .use("/authorization", AuthorizationPage)
+                .use("/registration", RegistrationPage)
+                .use("/chats", withSocket(withActiveChat(withChats(ChatsPage))))
+                .use("/profile", withUser(ProfilePage))
+                .use("/500", ErrorPage)
+                .use("/404", ErrorPage)
+                .use("/", AuthorizationPage)
+                .start()
+    
+})
+
+async function getAllResourses() {
+    try {
+        await AuthController.fetchUser()
+        await ChatController.get()
+    } catch (error) {
+        console.log(error);
+    }
+    
+}

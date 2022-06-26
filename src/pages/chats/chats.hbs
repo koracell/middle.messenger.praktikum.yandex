@@ -1,5 +1,9 @@
 <div class="page-chat">
     <div class="sidebar">
+        {{{logout}}}
+        {{{createChat}}}
+        {{{addUserToChat}}}
+        {{{deleteUserFromChat}}}
         <div class="profile-link">
             <a href="/profile">Profile</a>
         </div>
@@ -16,11 +20,12 @@
         <div class="chat-view__header">
             <div class="chat-view__inner">
                 <div class="chat-view__avatar">
-                    <img src="{{chat.image_link}}" alt="avatar" width="40" height="40">
+                    <img src="https://ya-praktikum.tech/api/v2/resources/{{current_chat.avatar}}" alt="avatar" width="40" height="40">
                 </div>
                 <div class="chat-view__name">
-                    {{chat.name}}
+                    {{current_chat.title}}
                 </div>
+                {{{changeAvatarButton}}}
             </div>
             <div class="chat-view__menu">
                 <a href="/profile">
@@ -29,14 +34,9 @@
             </div>
         </div>
         <div class="chat-view__content">
-            {{#each chat.messages}}
+            {{#each messages}}
                 <div class="chat-content__item">
-                    <div class="chat-content-inner">{{this.body}}</div>
-                </div>
-            {{/each}}
-            {{#each chat.messages}}
-                <div class="chat-content__item-own">
-                    <div class="chat-content-inner own">{{this.body}}</div>
+                    <div class="chat-content-inner">{{this.content}}</div>
                 </div>
             {{/each}}
         </div>
@@ -48,4 +48,9 @@
             </div>
         </div>
     </div>
+
+    {{{modalCreateChat}}}
+    {{{modalAddUserToChat}}}
+    {{{modalDeleteUserFromChat}}}
+    {{{modalChangeAvatar}}}
 </div>
